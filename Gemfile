@@ -6,7 +6,7 @@ gem 'puma'
 gem 'json'
 gem 'econfig'
 
-gem 'facegroup'
+gem 'Share_learning'
 
 group :develop, :test do
   gem 'pry-byebug'
