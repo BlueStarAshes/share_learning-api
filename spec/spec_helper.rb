@@ -22,8 +22,8 @@ OVERVIEW_CASSETTE = 'overview'.freeze
 
 # read credentials from a Yaml file into environment variables
 if File.file?('config/credentials.yml')
-  CREDENTIALS = YAML.load(File.read('config/app.yml'))
-  ENV['YOUTUBE_API_KEY'] = CREDENTIALS[:youtube_api_key]
+  credentials = YAML.load(File.read('config/app.yml'))
+  ENV['YOUTUBE_API_KEY'] = credentials[:youtube_api_key]
 end
 
 VCR.configure do |c|
