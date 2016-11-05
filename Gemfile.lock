@@ -41,7 +41,7 @@ GEM
       rack (>= 1.0)
     rake (11.3.0)
     safe_yaml (1.0.4)
-    share_learning (0.2.0)
+    share_learning (0.2.1)
       http (~> 2.0)
     sinatra (1.4.7)
       rack (~> 1.5)
