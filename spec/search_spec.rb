@@ -1,7 +1,7 @@
 require_relative 'spec_helper'
 
 describe 'Search Routes' do
-  HAPPY_SEARCH_KEYWORD = 'machine learning'.freeze
+  HAPPY_SEARCH_KEYWORD = 'machine+learning'.freeze
   SAD_SEARCH_KEYWORD = 'no_way_this_is_a_class,_never!'.freeze
 
   before do
@@ -14,7 +14,7 @@ describe 'Search Routes' do
 
   describe 'Retrieve resource from Coursera, Udacity, and Youtube' do
     it 'HAPPY: should retrieve relating resource with the HAPPY keyword' do
-      get "api/v0.1/search?#{HAPPY_SEARCH_KEYWORD}"
+      get "api/v0.1/search/#{HAPPY_SEARCH_KEYWORD}"
 
       last_response.status.must_equal 200
       last_response.content_type.must_equal 'application/json'
@@ -22,7 +22,7 @@ describe 'Search Routes' do
 
       available_external_apis = %w(coursera udacity youtube)
       external_api_info_keys = %w(count courses)
-      course_info_keys = %w(title course_url description photo_url)
+      course_info_keys = %w(title resource_url introduction photo_url)
 
       available_external_apis.each do |external_api|
         resource_data.key?(external_api).must_equal true
@@ -47,7 +47,7 @@ describe 'Search Routes' do
     end
 
     it 'SAD: should retrieve no any resource with the SAD keyword' do
-      get "api/v0.1/search?#{SAD_SEARCH_KEYWORD}"
+      get "api/v0.1/search/#{SAD_SEARCH_KEYWORD}"
 
       last_response.status.must_equal 200
       last_response.content_type.must_equal 'application/json'
