@@ -11,6 +11,4 @@ describe 'API basics' do
     last_response.body.must_include 'ShareLearning'
     last_response.status.must_equal 200
   end
-
-  
 end
