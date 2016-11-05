@@ -1,7 +1,7 @@
 require_relative 'spec_helper'
 
 describe 'Search Routes' do
-  HAPPY_SEARCH_KEYWORD = 'machine learning'.freeze
+  HAPPY_SEARCH_KEYWORD = 'machine+learning'.freeze
   SAD_SEARCH_KEYWORD = 'no_way_this_is_a_class,_never!'.freeze
 
   before do
@@ -22,7 +22,7 @@ describe 'Search Routes' do
 
       available_external_apis = %w(coursera udacity youtube)
       external_api_info_keys = %w(count courses)
-      course_info_keys = %w(title resource_url description photo_url)
+      course_info_keys = %w(title resource_url introduction photo_url)
 
       available_external_apis.each do |external_api|
         resource_data.key?(external_api).must_equal true
