@@ -30,7 +30,6 @@ class ShareLearningAPI < Sinatra::Base
 
       results_udacity =
         Udacity::UdacityCourse.find.acquire_courses_by_keywords(keyword)
-      results_udacity = [] if results_udacity.class != Array
 
       results_youtube =
         YouTube::YouTubePlaylist.find(keyword: keyword).results
@@ -78,7 +77,7 @@ class ShareLearningAPI < Sinatra::Base
       }.to_json
     end
   end
-  
+
   get "/#{API_VER}/overview/?" do
     begin
       coursera_num = Coursera::CourseraApi.total_course_num
