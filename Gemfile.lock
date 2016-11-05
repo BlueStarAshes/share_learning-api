@@ -1,9 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    Share_learning (0.1.0)
-      http (~> 2.0)
-    addressable (2.4.0)
+    addressable (2.5.0)
+      public_suffix (~> 2.0, >= 2.0.2)
     byebug (9.0.6)
     coderay (1.1.1)
     crack (0.4.3)
@@ -33,6 +32,7 @@ GEM
     pry-byebug (3.4.0)
       byebug (~> 9.0)
       pry (~> 0.10)
+    public_suffix (2.0.3)
     puma (3.6.0)
     rack (1.6.4)
     rack-protection (1.5.3)
@@ -41,6 +41,8 @@ GEM
       rack (>= 1.0)
     rake (11.3.0)
     safe_yaml (1.0.4)
+    share_learning (0.2.0)
+      http (~> 2.0)
     sinatra (1.4.7)
       rack (~> 1.5)
       rack-protection (~> 1.4)
@@ -60,7 +62,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  Share_learning
   econfig
   json
   minitest
@@ -69,6 +70,7 @@ DEPENDENCIES
   puma
   rack-test
   rake
+  share_learning
   sinatra
   vcr
   webmock
