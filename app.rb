@@ -1,4 +1,7 @@
-require 'Share_learning'
+# frozen_string_literal: true
+require 'sinatra'
+require 'econfig'
+require 'share_learning'
 
 # Share Learning API web service
 class ShareLearningAPI < Sinatra::Base
@@ -6,4 +9,10 @@ class ShareLearningAPI < Sinatra::Base
 
   Econfig.env = settings.environment.to_s
   Econfig.root = settings.root
+
+  API_VER = 'api/v0.2'
+
+  get '/?' do
+    "ShareLearningAPI latest version endpoints are at: /#{API_VER}/"
+  end
 end
