@@ -1,4 +1,5 @@
 # share_learning-api
+[ ![Codeship Status for BlueStarAshes/share_learning-api](https://app.codeship.com/projects/2375b400-8590-0134-0c4e-72b343bdcd56/status?branch=master)](https://app.codeship.com/projects/183373)     
 API to get courses information from Coursera, Udacity and Youtube
 
 ## Routes
