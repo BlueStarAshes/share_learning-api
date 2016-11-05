@@ -28,4 +28,3 @@ describe 'Overview courses' do
     overview_data['youtube'].must_equal('inf')
   end
 end
-
