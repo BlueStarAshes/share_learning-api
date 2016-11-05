@@ -22,12 +22,15 @@ class ShareLearningAPI < Sinatra::Base
 
   get "/#{API_VER}/search/:search_keyword/?" do
     keyword = params[:search_keyword]
-    keyword = keyword.tr('_', ' ') if keyword.include? '_'
+    keyword = keyword.tr('+', ' ') if keyword.include? '+'
     begin
       results_coursera =
         Coursera::CourseraCourses.find.search_courses(:all, keyword)
+
       results_udacity =
         Udacity::UdacityCourse.find.acquire_courses_by_keywords(keyword)
+      results_udacity = [] if results_udacity.class != Array
+
       results_youtube =
         YouTube::YouTubePlaylist.find(keyword: keyword).results
       content_type 'application/json'
