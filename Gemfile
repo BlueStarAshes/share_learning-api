@@ -8,7 +8,7 @@ gem 'econfig'
 
 gem 'share_learning'
 
-group :develop, :test do
+group :development, :test do
   gem 'pry-byebug'
 end
 
