@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 require 'sinatra'
 require 'econfig'
-require 'Share_learning'
+require 'share_learning'
 
-Share Learning API web service
+# Share Learning API web service
 class ShareLearningAPI < Sinatra::Base
   extend Econfig::Shortcut
 
