@@ -4,27 +4,31 @@
 class ShareLearningAPI < Sinatra::Base
   extend Econfig::Shortcut
 
-  # get "/#{API_VER}/courses/?" do
-  #   begin
-  #     coursera_courses = Coursera::CourseraCourses.find.courses
-  #     udacity_courses = Udacity::UdacityCourse.find.acquire_all_courses
+  get "/#{API_VER}/courses/?" do
+    begin
+      coursera_courses = Coursera::CourseraCourses.find.courses
+      udacity_courses = Udacity::UdacityCourse.find.acquire_all_courses
 
-  #     content_type 'application/json'
-  #     { coursera: coursera_courses, udacity: udacity_courses, youtube: 'inf' }.to_json
-  #   rescue
-  #     halt 404, 'Courses not found'
-  #   end
-  # end
+      content_type 'application/json'
+      { coursera: coursera_courses, udacity: udacity_courses, youtube: 'inf' }.to_json
+    rescue
+      halt 404, 'Courses not found'
+    end
+  end
 
-  put "/#{API_VER}/courses/" do
+  post "/#{API_VER}/courses/" do
     begin
       # coursera_courses = Coursera::CourseraCourses.find.courses
-      # udacity_courses = Udacity::UdacityCourse.find.acquire_all_courses
-      # udacity_courses.each do |course|
-      #   Course.new(title: '')
-      # end
-      my_course = Course.new(title:'title', introduction:'introduction', link:'link', photo:'photo')
-      my_course.save
+      udacity_courses = Udacity::UdacityCourse.find.acquire_all_courses
+      udacity_courses.each do |course|
+        my_course = Course.create(
+          title: course['title'],
+          id: course['id'], 
+          introduction: course['introduction'], 
+          link: course['link'], 
+          photo: course['photo']
+        )
+      end
 
       # course_id = params[:id]
       # posting = Posting.find(id: posting_id)
@@ -47,7 +51,7 @@ class ShareLearningAPI < Sinatra::Base
 
 
       content_type 'text/plain'
-      body ''
+      body 'Add courses finish'
     rescue
       content_type 'text/plain'
       halt 500, "Cannot update courses"
