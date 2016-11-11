@@ -6,7 +6,7 @@ class ShareLearningAPI < Sinatra::Base
 
   get "/#{API_VER}/search/:search_keyword/?" do
     keyword = params[:search_keyword]
-    keyword = keyword.tr('_', ' ') if keyword.include? '_'
+    keyword = keyword.tr('+', ' ') if keyword.include? '+'
     begin
       results_coursera =
         Coursera::CourseraCourses.find.search_courses(:all, keyword)
