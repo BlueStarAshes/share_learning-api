@@ -3,7 +3,7 @@ require 'sinatra'
 require 'econfig'
 require 'share_learning'
 
-require_relative 'app'
+require_relative 'base'
 
 Dir.glob("#{File.dirname(__FILE__)}/*.rb").each do |file|
   require file
