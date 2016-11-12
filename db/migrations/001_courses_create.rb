@@ -6,6 +6,7 @@ Sequel.migration do
     create_table(:courses) do
       primary_key :id
       String :title
+      String :course_id
       String :introduction
       String :link
       String :photo
