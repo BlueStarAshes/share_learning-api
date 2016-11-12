@@ -18,37 +18,38 @@ class ShareLearningAPI < Sinatra::Base
 
   post "/#{API_VER}/courses/" do
     begin
-      # coursera_courses = Coursera::CourseraCourses.find.courses
+      # acquire all courses on Udacity
       udacity_courses = Udacity::UdacityCourse.find.acquire_all_courses
       udacity_courses.each do |course|
         my_course = Course.create(
-          title: course['title'],
-          id: course['id'], 
-          introduction: course['introduction'], 
-          link: course['link'], 
-          photo: course['photo']
+          title: course[:title],
+          source: 'Udacity',
+          original_source_id: course[:id],
+          introduction: course[:intro], 
+          link: course[:link], 
+          photo: course[:image]
         )
+        my_course.save
       end
 
-      # course_id = params[:id]
-      # posting = Posting.find(id: posting_id)
-      # halt 400, "Posting (id: #{posting_id}) is not stored" unless posting
-      # updated_posting = FaceGroup::Posting.find(id: posting.fb_id)
-      # if updated_posting.nil?
-      #   halt 404, "Posting (id: #{posting_id}) not found on Facebook"
-      # end
-
-      # posting.update(
-      #   created_time:   updated_posting.created_time,
-      #   updated_time:   updated_posting.updated_time,
-      #   message:        updated_posting.message,
-      #   name:           updated_posting.name,
-      #   attachment_title:         updated_posting.attachment&.title,
-      #   attachment_description:   updated_posting.attachment&.description,
-      #   attachment_url:           updated_posting.attachment&.url
-      # )
-      # posting.save
-
+      # acquire all courses on Coursera
+      coursera_courses = Coursera::CourseraCourses.find.courses
+      coursera_courses.each do |item|
+        item.each.with_index do |course, index| 
+          if index == 1
+            my_course = Course.create(
+              title: course[:course_name],
+              source: 'Coursera',
+              original_source_id: course[:course_id],
+              introduction: course[:description], 
+              link: course[:link], 
+              photo: course[:photo_url]
+            )
+            my_course.save            
+   
+          end
+        end
+      end
 
       content_type 'text/plain'
       body 'Add courses finish'
