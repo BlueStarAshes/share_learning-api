@@ -16,7 +16,7 @@ class ShareLearningAPI < Sinatra::Base
     end
   end
 
-  post "/#{API_VER}/courses/" do
+  post "/#{API_VER}/courses/?" do
     begin
       # acquire all courses on Udacity
       udacity_courses = Udacity::UdacityCourse.find.acquire_all_courses
@@ -29,7 +29,7 @@ class ShareLearningAPI < Sinatra::Base
           link: course[:link], 
           photo: course[:image]
         )
-        my_course.save
+
       end
 
       # acquire all courses on Coursera
@@ -44,8 +44,7 @@ class ShareLearningAPI < Sinatra::Base
               introduction: course[:description], 
               link: course[:link], 
               photo: course[:photo_url]
-            )
-            my_course.save            
+            )           
    
           end
         end
@@ -55,7 +54,7 @@ class ShareLearningAPI < Sinatra::Base
       body 'Add courses finish'
     rescue
       content_type 'text/plain'
-      halt 500, "Cannot update courses"
+      halt 500, "Cannot create courses"
     end
   end
 end
