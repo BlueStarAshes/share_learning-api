@@ -19,6 +19,7 @@ FIXTURES_FOLDER = 'spec/fixtures'.freeze
 CASSETTES_FOLDER = "#{FIXTURES_FOLDER}/cassettes".freeze
 SEARCH_CASSETTE = 'search'.freeze
 OVERVIEW_CASSETTE = 'overview'.freeze
+ADVANCEDINFO_CASSETTE = 'advanced_info'.freeze
 
 VCR.configure do |c|
   c.cassette_library_dir = CASSETTES_FOLDER
@@ -30,7 +31,10 @@ VCR.configure do |c|
 end
 
 HAPPY_COURSE_ID = 1
-SAD_COURSE_ID = 0
+SAD_COURSE_ID = 000
 
 HAPPY_REVIEW_CONTENT = 'HAPPY review'
 SAD_REVIEW_CONTENT = 'SAD review'
+
+HAPPY_PREREQUISITE = 'HAPPY prerequisite'
+SAD_PREREQUISITE = 'SAD prerequisite'
