@@ -2,3 +2,5 @@ config/app.yml
 spec/fixtures/psudo_search_result.rb
 spec/fixtures/cassettes
 .DS_Store
+db/dev.db
+db/test.db
