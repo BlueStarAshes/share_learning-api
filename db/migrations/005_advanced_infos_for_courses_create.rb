@@ -8,7 +8,7 @@ Sequel.migration do
       primary_key  :id
       foreign_key :course_id
       foreign_key :advanced_info_id
-      Date :time
+      String :time
     end
   end
 end
