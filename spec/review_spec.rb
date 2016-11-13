@@ -13,6 +13,9 @@ describe 'Review Routes' do
   describe 'Create a new review' do
     before do
       DB[:reviews].delete
+      DB[:courses].delete
+      post 'api/v0.1/courses',
+           'CONTENT_TYPE' => 'application/json'      
     end
 
     it '(HAPPY) should successfully create a new review' do
