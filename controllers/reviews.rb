@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'date'
 
 # Share Learning API web service
 class ShareLearningAPI < Sinatra::Base
@@ -20,12 +21,13 @@ class ShareLearningAPI < Sinatra::Base
     
     begin
       body_params = JSON.parse request.body.read
-      # review_content = body.params['content']  
+      review_content = body_params['content']  
+      current_time = DateTime.now.strftime("%F %T")
 
-      # Review.create(
-      #   content: 'review_content',
-      #   time: 'review_content_time'
-      # )
+      Review.create(
+        content: review_content,
+        time: current_time
+      )
 
     rescue
       content_type 'text/plain'
