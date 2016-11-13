@@ -6,8 +6,8 @@ class ShareLearningAPI < Sinatra::Base
   extend Econfig::Shortcut
 
   get "/#{API_VER}/course/:id/reviews/?" do
-    course_id = params[:id]
     begin
+      course_id = params[:id]
       course = Course.find(id: course_id)
 
       content_type 'application/json'
@@ -17,16 +17,27 @@ class ShareLearningAPI < Sinatra::Base
     end
   end
 
-  post "/#{API_VER}/reviews/?" do
-    
+  post "/#{API_VER}/reviews/:id/?" do
     begin
+      course_id = params[:id]
+      course = Course.find(id: course_id)
+      halt 400, "Course (id: #{course_id}) is not stored" unless course
+
       body_params = JSON.parse request.body.read
       review_content = body_params['content']  
+      halt 400, "The review has no content to be stored" unless review_content
+
       current_time = DateTime.now.strftime("%F %T")
+      
 
       Review.create(
         content: review_content,
         created_time: current_time  # the time when the review is created
+      )
+
+      Coursereview.create(
+        course_id: course_id,
+        review_id: Review.last.id
       )
 
       content_type 'text/plain'
