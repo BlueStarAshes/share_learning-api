@@ -25,6 +25,8 @@ class ShareLearningAPI < Sinatra::Base
 
       body_params = JSON.parse request.body.read
       review_content = body_params['content']  
+      halt 400, "The review has no content to be stored" unless review_content
+
       current_time = DateTime.now.strftime("%F %T")
       
 
