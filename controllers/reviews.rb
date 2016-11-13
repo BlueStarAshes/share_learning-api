@@ -29,9 +29,12 @@ class ShareLearningAPI < Sinatra::Base
         created_time: current_time  # the time when the review is created
       )
 
+      content_type 'text/plain'
+      body 'Successfully create a new review'
+
     rescue
       content_type 'text/plain'
-      halt 500, "Cannot create review"
+      halt 500, "Failed to create review"
     end
   end
 end
