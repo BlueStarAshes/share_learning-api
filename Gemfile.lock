@@ -77,7 +77,7 @@ GEM
     safe_yaml (1.0.4)
     sequel (4.40.0)
     sexp_processor (4.7.0)
-    share_learning (0.2.1)
+    share_learning (0.2.3)
       http (~> 2.0)
     sinatra (1.4.7)
       rack (~> 1.5)
