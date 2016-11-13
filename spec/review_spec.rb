@@ -31,7 +31,7 @@ describe 'Group Routes' do
 
     it '(BAD) should report error if given wrong data' do
       post 'api/v0.1/reviews',
-           { content: BAD_REVIEW_CONTENT }.to_json,
+           { url: SAD_REVIEW_CONTENT }.to_json,
            'CONTENT_TYPE' => 'application/json'
 
       last_response.status.must_equal 500
