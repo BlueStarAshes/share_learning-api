@@ -1,8 +1,25 @@
 # frozen_string_literal: true
+require 'sinatra'
+require 'econfig'
+require 'share_learning'
 
 # Share Learning API web service
 class ShareLearningAPI < Sinatra::Base
   extend Econfig::Shortcut
+
+  Econfig.env = settings.environment.to_s
+  Econfig.root = settings.root
+
+  # Setting Youtube API key
+  YouTube::YouTubeAPI
+    .config
+    .update(api_key: config.YOUTUBE_API_KEY)
+
+  API_VER = 'api/v0.1'.freeze
+
+  get '/?' do
+    "ShareLearningAPI latest version endpoints are at: /#{API_VER}/"
+  end
 
   get "/#{API_VER}/search/:search_keyword/?" do
     keyword = params[:search_keyword]
@@ -58,6 +75,18 @@ class ShareLearningAPI < Sinatra::Base
           end
         }
       }.to_json
+    end
+  end
+
+  get "/#{API_VER}/overview/?" do
+    begin
+      coursera_num = Coursera::CourseraApi.total_course_num
+      udacity_num = Udacity::UdacityAPI.total_course_num
+
+      content_type 'application/json'
+      { coursera: coursera_num, udacity: udacity_num, youtube: 'inf' }.to_json
+    rescue
+      halt 404, "Overview not found"
     end
   end
 end
