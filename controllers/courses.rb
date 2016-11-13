@@ -4,6 +4,7 @@
 class ShareLearningAPI < Sinatra::Base
   extend Econfig::Shortcut
 
+  # acquire all courses from database
   get "/#{API_VER}/courses/?" do
     begin
       coursera_courses = Coursera::CourseraCourses.find.courses
@@ -16,6 +17,22 @@ class ShareLearningAPI < Sinatra::Base
     end
   end
 
+  # find a course by its id
+  get "/#{API_VER}/courses/:id/?" do
+    course_id = params[:id]
+    begin
+      course = Course.find(id: course_id)
+
+      content_type 'application/json'
+      { id: course.id, title: course.title, source: course.source, \
+        introduction: course.introduction, link: course.link}.to_json
+    rescue
+      content_type 'text/plain'
+      halt 404, "Course (id: #{course_id}) not found"
+end
+  end
+
+  # store courses to database
   post "/#{API_VER}/courses/?" do
     begin
       # acquire all courses on Udacity
