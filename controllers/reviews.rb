@@ -17,16 +17,23 @@ class ShareLearningAPI < Sinatra::Base
     end
   end
 
-  post "/#{API_VER}/reviews/?" do
-    
+  post "/#{API_VER}/reviews/:id/?" do
+    course_id = params[:id]
+
     begin
       body_params = JSON.parse request.body.read
       review_content = body_params['content']  
       current_time = DateTime.now.strftime("%F %T")
+      course = Course.find(id: course_id)
 
       Review.create(
         content: review_content,
         created_time: current_time  # the time when the review is created
+      )
+
+      Coursereview.create(
+        course_id: course_id,
+        review_id: Review.last.id
       )
 
       content_type 'text/plain'
