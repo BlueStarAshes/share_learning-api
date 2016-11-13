@@ -29,5 +29,8 @@ VCR.configure do |c|
   end
 end
 
+HAPPY_COURSE_ID = 1
+SAD_COURSE_ID = 0
+
 HAPPY_REVIEW_CONTENT = 'HAPPY review'
 SAD_REVIEW_CONTENT = 'SAD review'
