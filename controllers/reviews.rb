@@ -26,7 +26,7 @@ class ShareLearningAPI < Sinatra::Base
 
       Review.create(
         content: review_content,
-        time: current_time
+        created_time: current_time  # the time when the review is created
       )
 
     rescue

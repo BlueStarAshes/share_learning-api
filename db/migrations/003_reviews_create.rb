@@ -6,7 +6,7 @@ Sequel.migration do
     create_table(:reviews) do
       primary_key :id
       String :content
-      String :time
+      String :created_time
     end
   end
 end
