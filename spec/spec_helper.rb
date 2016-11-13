@@ -28,3 +28,6 @@ VCR.configure do |c|
     app.config.YOUTUBE_API_KEY
   end
 end
+
+HAPPY_REVIEW_CONTENT = 'HAPPY review'
+SAD_REVIEW_CONTENT = 'SAD review'
