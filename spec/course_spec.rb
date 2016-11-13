@@ -3,7 +3,7 @@ require_relative 'spec_helper'
 
 describe 'Group Routes' do
   before do
-    VCR.insert_cassette GROUPS_CASSETTE, record: :new_episodes
+    VCR.insert_cassette COURSES_CASSETTE, record: :new_episodes
   end
 
   after do

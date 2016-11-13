@@ -19,6 +19,8 @@ FIXTURES_FOLDER = 'spec/fixtures'.freeze
 CASSETTES_FOLDER = "#{FIXTURES_FOLDER}/cassettes".freeze
 SEARCH_CASSETTE = 'search'.freeze
 OVERVIEW_CASSETTE = 'overview'.freeze
+COURSES_CASSETTE = 'courses'.freeze
+REVIEWS_CASSETTE = 'reviews'.freeze
 
 VCR.configure do |c|
   c.cassette_library_dir = CASSETTES_FOLDER
