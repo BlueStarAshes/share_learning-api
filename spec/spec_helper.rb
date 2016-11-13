@@ -21,6 +21,7 @@ SEARCH_CASSETTE = 'search'.freeze
 OVERVIEW_CASSETTE = 'overview'.freeze
 COURSES_CASSETTE = 'courses'.freeze
 REVIEWS_CASSETTE = 'reviews'.freeze
+ADVANCEDINFO_CASSETTE = 'advanced_info'.freeze
 
 VCR.configure do |c|
   c.cassette_library_dir = CASSETTES_FOLDER
@@ -31,7 +32,12 @@ VCR.configure do |c|
   end
 end
 
+HAPPY_COURSE_ID = 1
 SAD_COURSE_ID = '0'
+
 
 HAPPY_REVIEW_CONTENT = 'HAPPY review'
 SAD_REVIEW_CONTENT = 'SAD review'
+
+HAPPY_PREREQUISITE = 'HAPPY prerequisite'
+SAD_PREREQUISITE = 'SAD prerequisite'
