@@ -37,6 +37,6 @@ group :development, :production do
   gem 'hirb'
 end
 
-# group :production do
-  # gem 'pg'
-# end
+group :production do
+  gem 'pg'
+end
