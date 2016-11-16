@@ -24,6 +24,8 @@ class ShareLearningAPI < Sinatra::Base
           count: results_coursera.count,
           courses: results_coursera.map do |course|
             shorten_result = {}
+            shorten_result[:source] = 'coursera'
+            shorten_result[:original_source_id] = course[:course_id]
             shorten_result[:title] = course[:course_name]
             shorten_result[:introduction] = course[:description]
             shorten_result[:resource_url] = course[:link]
