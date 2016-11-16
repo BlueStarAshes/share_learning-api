@@ -32,7 +32,6 @@ VCR.configure do |c|
   end
 end
 
-HAPPY_COURSE_ID = 1
 SAD_COURSE_ID = '0'
 
 
