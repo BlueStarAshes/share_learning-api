@@ -1,2 +1,2 @@
-require './app.rb'
+require './init.rb'
 run ShareLearningAPI
