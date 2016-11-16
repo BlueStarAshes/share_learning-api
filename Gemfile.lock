@@ -43,6 +43,7 @@ GEM
     minitest-rg (5.2.0)
       minitest (~> 5.0)
     path_expander (1.0.0)
+    pg (0.19.0)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -111,6 +112,7 @@ DEPENDENCIES
   json
   minitest
   minitest-rg
+  pg
   pry-byebug
   puma
   rack-test
