@@ -10,5 +10,7 @@ API to get learning resource information from Coursera, Udacity and Youtube
  * `v0.1/overview` - get the number of courses from Coursera, Udacity. (Youtube will be set as 'inf' since there are too many contents)
 
 ## Our current ER-model diagram
-[ERD] <-- check it out here
+[ERD] <-- check it out here (draw.io)
+
+![ERD-picture](https://lh4.googleusercontent.com/9aQP2r9lLmN67AMvoZfJE2j8KAvCEc93I6mDBBy9Lpl5HiD4i_2FQ6UNWD_RHfc26XHusuYttbS0J8k=w1920-h950-rw)
 [ERD]:https://drive.google.com/file/d/0B58MTsVOT2bHbGNKdzVZdUdxdHc/view?usp=sharing
