@@ -6,11 +6,12 @@ class ShareLearningAPI < Sinatra::Base
 
   # acquire all courses from database
   get "/#{API_VER}/courses/?" do
-    result = FindCourse.call()
+    result = FindAllCourses.call()
+    # result = coursera_courses + udacity_courses
 
     if result.success?
       CourseRepresenter.new(result).to_json
-
+      # { coursera: coursera_courses, udacity: udacity_courses, youtube: 'inf' }.to_json
     else
       ErrorRepresenter.new(result.value).to_status_response
     end
