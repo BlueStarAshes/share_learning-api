@@ -10,8 +10,9 @@ class ShareLearningAPI < Sinatra::Base
     # result = coursera_courses + udacity_courses
 
     if result.success?
-      CourseRepresenter.new(result).to_json
-      # { coursera: coursera_courses, udacity: udacity_courses, youtube: 'inf' }.to_json
+      coursera_courses = CourseRepresenter.new(result[:coursera]).to_json
+      udacity_courses = CourseRepresenter.new(result[:udacity]).to_json
+      { coursera: coursera_courses, udacity: udacity_courses, youtube: 'inf' }.to_json
     else
       ErrorRepresenter.new(result.value).to_status_response
     end
