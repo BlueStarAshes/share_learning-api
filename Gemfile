@@ -1,13 +1,20 @@
 # frozen_string_literal: true
 source 'https://rubygems.org'
+ruby '2.3.1'
 
 gem 'sinatra'
 gem 'puma'
 gem 'json'
 gem 'econfig'
+gem 'rake'
 
 gem 'share_learning'
 gem 'sequel'
+gem 'roar'
+gem 'multi_json'
+gem 'dry-monads'
+gem 'dry-container'
+gem 'dry-transaction'
 
 group :development, :test do
   gem 'pry-byebug'
@@ -26,7 +33,6 @@ group :test do
   gem 'minitest-rg'
 
   gem 'rack-test'
-  gem 'rake'
 
   gem 'vcr'
   gem 'webmock'
