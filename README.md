@@ -8,3 +8,6 @@ API to get learning resource information from Coursera, Udacity and Youtube
    * e.g. "machine+learning".
    * Here "+" is used to represent the space in your keyword. So "machine+learning" would help you search resource related to "machine learning" on those platforms.
  * `v0.1/overview` - get the number of courses from Coursera, Udacity. (Youtube will be set as 'inf' since there are too many contents)
+
+## Our current ER-model diagram
+![Alt text](http://i.imgur.com/6eYGuGL.png)
