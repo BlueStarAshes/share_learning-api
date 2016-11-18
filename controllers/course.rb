@@ -6,6 +6,18 @@ class ShareLearningAPI < Sinatra::Base
 
   # acquire all courses from database
   get "/#{API_VER}/courses/?" do
+
+    # begin
+    #   course = Course.find(id: course_id)
+
+    #   content_type 'application/json'
+    #   { id: course.id, title: course.title, source: course.source, \
+    #     introduction: course.introduction, link: course.link}.to_json
+    # rescue
+    #   content_type 'text/plain'
+    #   halt 404, "Course (id: #{course_id}) not found"
+    # end    
+
     result = FindAllCourses.call()
     # result = coursera_courses + udacity_courses
 
@@ -25,23 +37,11 @@ class ShareLearningAPI < Sinatra::Base
     result = FindCourse.call(params)
 
     if result.success?
-      CourseRepresenter.new(result).to_json
+      CourseRepresenter.new(result.value).to_json
 
     else
       ErrorRepresenter.new(result.value).to_status_response
     end
-
-    # course_id = params[:id]
-    # begin
-    #   course = Course.find(id: course_id)
-
-    #   content_type 'application/json'
-    #   { id: course.id, title: course.title, source: course.source, \
-    #     introduction: course.introduction, link: course.link}.to_json
-    # rescue
-    #   content_type 'text/plain'
-    #   halt 404, "Course (id: #{course_id}) not found"
-    # end
   end
 
   # store courses to database
