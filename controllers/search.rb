@@ -16,50 +16,55 @@ class ShareLearningAPI < Sinatra::Base
 
       results_youtube =
         YouTube::YouTubePlaylist.find(keyword: keyword).results
+
+      refined_results_coursera = SearchResultsSingleSource.new(
+        results_coursera.count,
+        results_coursera.map do |course|
+          search_results_course = SearchResultsCourse.new(
+            course[:course_name],
+            course[:description],
+            course[:link],
+            course[:photo_url]
+          )
+          search_results_course
+        end
+      )
+
+      refined_results_udacity = SearchResultsSingleSource.new(
+        results_udacity.count,
+        results_udacity.map do |course|
+          search_results_course = SearchResultsCourse.new(
+            course[:title],
+            course[:intro],
+            course[:link],
+            course[:image]
+          )
+          search_results_course
+        end
+      )
+
+      refined_results_youtube = SearchResultsSingleSource.new(
+        results_youtube.count,
+        results_youtube.map do |course|
+          search_results_course = SearchResultsCourse.new(
+            course['title'],
+            course['description'],
+            course['url'],
+            course['image']
+          )
+          search_results_course
+        end
+      )
+
+      search_results = SearchResults.new(
+        refined_results_coursera,
+        refined_results_udacity,
+        refined_results_youtube
+      )
+
       content_type 'application/json'
-      {
-        # Search results from Coursera
-        coursera:
-        {
-          count: results_coursera.count,
-          courses: results_coursera.map do |course|
-            shorten_result = {}
-            shorten_result[:source] = 'coursera'
-            shorten_result[:original_source_id] = course[:course_id]
-            shorten_result[:title] = course[:course_name]
-            shorten_result[:introduction] = course[:description]
-            shorten_result[:resource_url] = course[:link]
-            shorten_result[:photo_url] = course[:photo_url]
-            shorten_result
-          end
-        },
-        # Search results from Udacity
-        udacity:
-        {
-          count: results_udacity.count,
-          courses: results_udacity.map do |course|
-            shorten_result = {}
-            shorten_result[:title] = course[:title]
-            shorten_result[:introduction] = course[:intro]
-            shorten_result[:resource_url] = course[:link]
-            shorten_result[:photo_url] = course[:image]
-            shorten_result
-          end
-        },
-        # Search results from Youtube
-        youtube:
-        {
-          count: results_youtube.count,
-          courses: results_youtube.map do |course|
-            shorten_result = {}
-            shorten_result[:title] = course['title']
-            shorten_result[:introduction] = course['description']
-            shorten_result[:resource_url] = course['url']
-            shorten_result[:photo_url] = course['image']
-            shorten_result
-          end
-        }
-      }.to_json
+      SearchResultsRepresenter.new(search_results).to_json
+
     end
   end
 end
