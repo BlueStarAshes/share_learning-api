@@ -9,17 +9,27 @@ class ShareLearningAPI < Sinatra::Base
     begin
       course_id = params[:id]
       course = Course.find(id: course_id)
+      halt 400, "Course (id: #{course_id}) is not stored" unless course
 
+      course_reviews = Coursereview.where(course_id: course_id).all
+      halt 400, "reviews stored" unless course_reviews
+      
+      output = []
+      course_reviews.each do |course_review|
+        review = Review.find(id: course_review.review_id)
+        output.push({content: review.content, created_time: review.created_time})
+      end
+      
       content_type 'application/json'
-      { coursera: coursera_courses, udacity: udacity_courses, youtube: 'inf' }.to_json
+      output.to_json
     rescue
-      halt 404, 'Courses not found'
+      halt 404, 'Reviews not found'
     end
   end
 
-  post "/#{API_VER}/reviews/:id/?" do
+  post "/#{API_VER}/reviews/:course_id/?" do
     begin
-      course_id = params[:id]
+      course_id = params[:course_id]
       course = Course.find(id: course_id)
       halt 400, "Course (id: #{course_id}) is not stored" unless course
 
