@@ -7,11 +7,11 @@ class ShareLearningAPI < Sinatra::Base
 
   # acquire all courses from database
   get "/#{API_VER}/courses/?" do
-    udacity_results = AllCourses.new(Course.where(source: 'Udacity').first(2))
+    udacity_results = AllCourses.new(Course.where(source: 'Udacity').all)
     udacity_courses = AllCoursesRepresenter.new(udacity_results).to_json  # output String object
     udacity_courses = JSON.parse(udacity_courses) # parse String to JSON object
 
-    coursera_results = AllCourses.new(Course.where(source: 'Coursera').first(2))
+    coursera_results = AllCourses.new(Course.where(source: 'Coursera').all)
     coursera_courses = AllCoursesRepresenter.new(coursera_results).to_json  # output String object
     coursera_courses = JSON.parse(coursera_courses) # parse String to JSON object
 
