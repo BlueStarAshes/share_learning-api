@@ -6,44 +6,15 @@ class ShareLearningAPI < Sinatra::Base
 
   # acquire all courses from database
   get "/#{API_VER}/courses/?" do
+    udacity_results = AllCourses.new(Course.where(source: 'Udacity').first(2))
+    udacity_courses = AllCoursesRepresenter.new(udacity_results).to_json
+    udacity_courses = JSON.parse(udacity_courses) # parse String to JSON object
 
-    begin
-      udacity_courses = Course.where(source: 'Udacity').all
-      coursera_courses = Course.where(source: 'Coursera').all
-      
-      udacity = []
-      coursera = []
-      udacity_courses.each do |course|
-        udacity.push({id: course.id, title: course.title,
-                      source: course.source, introduction: course.introduction,
-                      link: course.link})
-      end
-      coursera_courses.each do |course|
-        coursera.push({id: course.id, title: course.title,
-                      source: course.source, introduction: course.introduction,
-                      link: course.link})
-      end
+    coursera_results = AllCourses.new(Course.where(source: 'Coursera').first(2))
+    coursera_courses = AllCoursesRepresenter.new(coursera_results).to_json
+    coursera_courses = JSON.parse(coursera_courses) # parse String to JSON object
 
-      content_type 'application/json'
-      {udacity: udacity, coursera: coursera, youtube: 'inf'}.to_json
-
-    rescue
-      content_type 'text/plain'
-      halt 404, "Courses not found"
-    end    
-
-    # result = FindAllCourses.call()
-    # # result = coursera_courses + udacity_courses
-
-    # if result.success?
-    #   puts result
-    #   CourseRepresenter.new(result.value).to_json
-    #   # coursera_courses = CourseRepresenter.new(result[:coursera]).to_json
-    #   # udacity_courses = CourseRepresenter.new(result[:udacity]).to_json
-    #   # { coursera: coursera_courses, udacity: udacity_courses, youtube: 'inf' }.to_json
-    # else
-    #   ErrorRepresenter.new(result.value).to_status_response
-    # end
+    {udacity: udacity_courses['courses'], coursera: coursera_courses['courses'], youtube: 'inf'}.to_json
   end
 
   # find a course by its id
