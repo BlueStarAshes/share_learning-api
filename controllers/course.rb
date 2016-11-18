@@ -11,7 +11,7 @@ class ShareLearningAPI < Sinatra::Base
     udacity_courses = AllCoursesRepresenter.new(udacity_results.value).to_json  # output String object
     udacity_courses = JSON.parse(udacity_courses) # parse String to JSON object
 
-    coursera_results = FindAllCourses.call('Udacity')
+    coursera_results = FindAllCourses.call('Coursera')
     coursera_courses = AllCoursesRepresenter.new(coursera_results.value).to_json  # output String object
     coursera_courses = JSON.parse(coursera_courses) # parse String to JSON object
 
