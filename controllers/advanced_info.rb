@@ -7,13 +7,16 @@ class ShareLearningAPI < Sinatra::Base
   get "/#{API_VER}/course/advanced_info/:id/?" do
     course_id = params[:id]
     begin
-      course_info = CourseAdvancedInfo.find(course_id: course_id)
-      advanced_info = AdvancedInfo.find(id: course_info.advanced_info_id)
-
+      results = []
+      course_info = CourseAdvancedInfo.where(course_id: course_id).all
+      course_info.each do |info|
+        advanced_info = AdvancedInfo.find(id: info.advanced_info_id)
+        print AdvancedInfo.find(id: info.advanced_info_id)
+        results << AdvancedInfoRepresenter.new(advanced_info).to_json
+      end
+      
       content_type 'application/json'
-      AdvancedInfoRepresenter.new(advanced_info).to_json
-      # { prerequisite: advanced_info.prerequisite, \
-      #   difficulty: advanced_info.difficulty, helpful: advanced_info.helpful }.to_json
+      results
     rescue 
       halt 404, 'Courses not found'     
     end
