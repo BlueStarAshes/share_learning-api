@@ -31,7 +31,6 @@ describe 'Course Routes' do
       get "api/v0.1/courses/#{SAD_COURSE_ID}"
 
       last_response.status.must_equal 404
-      last_response.body.must_include SAD_COURSE_ID
     end
   end
 end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'json'
 
 # Share Learning API web service
 class ShareLearningAPI < Sinatra::Base
@@ -14,6 +15,7 @@ class ShareLearningAPI < Sinatra::Base
     coursera_courses = AllCoursesRepresenter.new(coursera_results).to_json
     coursera_courses = JSON.parse(coursera_courses) # parse String to JSON object
 
+    content_type 'application/json'
     {udacity: udacity_courses['courses'], coursera: coursera_courses['courses'], youtube: 'inf'}.to_json
   end
 
@@ -22,6 +24,7 @@ class ShareLearningAPI < Sinatra::Base
     result = FindCourse.call(params)
 
     if result.success?
+      content_type 'application/json'
       CourseRepresenter.new(result.value).to_json
 
     else
