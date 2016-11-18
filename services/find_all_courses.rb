@@ -4,18 +4,11 @@
 class FindAllCourses
   extend Dry::Monads::Either::Mixin
 
-  def self.call()
-  	coursera_courses = Course.find(source: 'Coursera')
-    udacity_courses = Course.where(source: 'Udacity')
-    # courses = coursera_courses + udacity_courses
-
-    if coursera_courses.nil?
-      Left(Error.new(:not_found, 'Coursera courses not found'))   
-    elsif udacity_courses.nil?
-      Left(Error.new(:not_found, 'Udacity courses not found'))
+  def self.call(source)
+    if (course = AllCourses.new(Course.where(source: source).all)).nil?
+      Left(Error.new(:not_found, 'Course not found'))
     else
-      # Right(coursera: coursera_courses, udacity: udacity_courses)
-      Right(coursera_courses)
+      Right(course)
     end
   end
 end
