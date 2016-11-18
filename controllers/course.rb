@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'json'
 
 # Share Learning API web service
 class ShareLearningAPI < Sinatra::Base
@@ -6,30 +7,28 @@ class ShareLearningAPI < Sinatra::Base
 
   # acquire all courses from database
   get "/#{API_VER}/courses/?" do
-    begin
-      coursera_courses = Coursera::CourseraCourses.find.courses
-      udacity_courses = Udacity::UdacityCourse.find.acquire_all_courses
+    udacity_results = AllCourses.new(Course.where(source: 'Udacity').all)
+    udacity_courses = AllCoursesRepresenter.new(udacity_results).to_json  # output String object
+    udacity_courses = JSON.parse(udacity_courses) # parse String to JSON object
 
-      content_type 'application/json'
-      { coursera: coursera_courses, udacity: udacity_courses, youtube: 'inf' }.to_json
-    rescue
-      halt 404, 'Courses not found'
-    end
+    coursera_results = AllCourses.new(Course.where(source: 'Coursera').all)
+    coursera_courses = AllCoursesRepresenter.new(coursera_results).to_json  # output String object
+    coursera_courses = JSON.parse(coursera_courses) # parse String to JSON object
+
+    content_type 'application/json'
+    {udacity: udacity_courses['courses'], coursera: coursera_courses['courses'], youtube: 'inf'}.to_json
   end
 
   # find a course by its id
   get "/#{API_VER}/courses/:id/?" do
-    course_id = params[:id]
-    begin
-      course = Course.find(id: course_id)
+    result = FindCourse.call(params)
 
+    if result.success?
       content_type 'application/json'
-      { id: course.id, title: course.title, source: course.source, \
-        introduction: course.introduction, link: course.link}.to_json
-    rescue
-      content_type 'text/plain'
-      halt 404, "Course (id: #{course_id}) not found"
-end
+      CourseRepresenter.new(result.value).to_json
+    else
+      ErrorRepresenter.new(result.value).to_status_response
+    end
   end
 
   # store courses to database
