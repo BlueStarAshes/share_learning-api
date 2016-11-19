@@ -40,7 +40,7 @@ class SearchCourses
     rescue
       Left(
         Error.new(
-          :search_exception_coursera,
+          :internal_server_error,
           'Exception during search in Coursera'
         )
       )
@@ -70,7 +70,7 @@ class SearchCourses
     rescue
       Left(
         Error.new(
-          :search_exception_udacity,
+          :internal_server_error,
           'Exception during search in Udacity'
         )
       )
@@ -100,7 +100,7 @@ class SearchCourses
     rescue
       Left(
         Error.new(
-          :search_exception_youtube,
+          :internal_server_error,
           'Exception during search in YouTube'
         )
       )
