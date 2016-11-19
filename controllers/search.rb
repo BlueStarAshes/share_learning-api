@@ -5,6 +5,17 @@ class ShareLearningAPI < Sinatra::Base
   extend Econfig::Shortcut
 
   get "/#{API_VER}/search/:search_keyword/?" do
+    results = SearchCourses.call(params)
+
+    if results.success?
+      content_type 'application/json'
+      SearchResultsRepresenter.new(results).to_json
+    else
+      ErrorRepresenter.new(results.value).to_status_response
+    end
+  end
+=begin
+  get "/#{API_VER}/search/:search_keyword/?" do
     keyword = params[:search_keyword]
     keyword = keyword.tr('+', ' ') if keyword.include? '+'
     begin
@@ -67,4 +78,5 @@ class ShareLearningAPI < Sinatra::Base
 
     end
   end
+=end
 end
