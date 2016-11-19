@@ -13,18 +13,18 @@ describe 'Overview courses' do
   it 'should be able to get the number of courses on Coursera' do
     get 'api/v0.1/overview'
     overview_data = JSON.parse(last_response.body)
-    overview_data['coursera'].to_i.must_be :>=, 0
+    overview_data['coursera_count'].to_i.must_be :>=, 0
   end
 
-  it 'should be able to get the number of courses on Udecity' do
+  it 'should be able to get the number of courses on Udacity' do
     get 'api/v0.1/overview'
     overview_data = JSON.parse(last_response.body)
-    overview_data['udecity'].to_i.must_be :>=, 0
+    overview_data['udacity_count'].to_i.must_be :>=, 0
   end
 
   it 'should be able to get the number of courses on YouTube' do
     get 'api/v0.1/overview'
     overview_data = JSON.parse(last_response.body)
-    overview_data['youtube'].must_equal('inf')
+    overview_data['youtube_count'].must_equal('inf')
   end
 end
