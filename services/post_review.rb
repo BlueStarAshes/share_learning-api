@@ -24,7 +24,7 @@ class PostReview
     if review_content
       Right({course_id: params[:course_id], review_content: review_content})
     else
-      Left(Error.new(:not_found, 'The review has no content'))
+      Left(Error.new(:cannot_process, 'The review has no content'))
     end
   }
 
