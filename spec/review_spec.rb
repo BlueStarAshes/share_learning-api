@@ -24,7 +24,6 @@ describe 'Review Routes' do
            'CONTENT_TYPE' => 'application/json'
 
       last_response.status.must_equal 200
-      last_response.body.must_include 'Successfully'
 
       Review.count.must_be :>=, 1
     end
@@ -34,8 +33,7 @@ describe 'Review Routes' do
            { url: SAD_REVIEW_CONTENT }.to_json,
            'CONTENT_TYPE' => 'application/json'
 
-      last_response.status.must_equal 400
-      last_response.body.must_include 'no content'
+      last_response.status.must_equal 422
     end
 
     it '(BAD) should report error if given wrong course id' do
@@ -43,8 +41,7 @@ describe 'Review Routes' do
            { url: SAD_REVIEW_CONTENT }.to_json,
            'CONTENT_TYPE' => 'application/json'
 
-      last_response.status.must_equal 400
-      last_response.body.must_include SAD_COURSE_ID
+      last_response.status.must_equal 404
     end    
   end
 end
