@@ -28,10 +28,11 @@ describe 'Advanced Info Routes' do
     end
 
     it '(BAD) should report error if could not post data' do
-      post "api/v0.1/advanced_info/#{SAD_COURSE_ID}"
+      post "api/v0.1/advanced_info/",
+           {}.to_json,
+           'CONTENT_TYPE' => 'application/json'
 
-      last_response.status.must_equal 500
-      last_response.body.must_include 'Cannot add'
+      last_response.status.must_equal 404
     end    
   end
 
