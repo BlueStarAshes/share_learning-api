@@ -9,12 +9,13 @@ class CreateAdvancedInfos
 
   def self.call(request, params)
     body_params = JSON.parse request
-    if body_params
+    course = Course.find(id: params[:id])
+    if body_params or course.nil?
       info = create_advanced_infos(body_params)
       info_for_course = create_courses_advanced_infos(params[:id])
       Right(info)
     else
-      Left(Error.new(:cannot_process, "Cannot add advanced information"))
+      Left(Error.new(:not_found, "Cannot add advanced information"))
     end
   end
 

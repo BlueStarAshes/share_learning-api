@@ -7,7 +7,6 @@ class FindAdvancedInfos
   extend Dry::Monads::Either::Mixin
 
   def self.call(params)
-    # group = Group.find(id: params[:id])
     course = Course.find(id: params[:id])
     if course.nil? 
       Left(Error.new(:not_found, "Cannot find advanced information"))
