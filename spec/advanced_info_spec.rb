@@ -27,11 +27,26 @@ describe 'Advanced Info Routes' do
       AdvancedInfo.count.must_be :>=, 1
     end
 
-    it '(BAD) should report error if not given post data' do
-      post "api/v0.1/advanced_info/#{SAD_COURSE_ID}"
+    it '(BAD) should report error if could not post data' do
+      post "api/v0.1/advanced_info/",
+           {}.to_json,
+           'CONTENT_TYPE' => 'application/json'
 
-      last_response.status.must_equal 500
-      last_response.body.must_include 'Cannot add'
+      last_response.status.must_equal 404
+    end    
+  end
+
+  describe 'Get all advanced info for a course' do
+    it '(HAPPY) should get advanced infos with the course id' do
+      get "api/v0.1/course/advanced_info/#{Course.first.id}"
+
+      last_response.status.must_equal 200
+      last_response.content_type.must_equal 'application/json'
     end
+
+    it '(SAD) should report if the info of the course id is not found' do
+      get "api/v0.1/course/advanced_info/"
+      last_response.status.must_equal 404 
+    end   
   end
 end
