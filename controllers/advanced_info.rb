@@ -7,43 +7,23 @@ class ShareLearningAPI < Sinatra::Base
   get "/#{API_VER}/course/advanced_info/:id/?" do
     course_id = params[:id]
     begin
-      # results = []
-      # course_info = CourseAdvancedInfo.where(course_id: course_id).all
-      course_info = CourseAdvancedInfo.find(course_id: course_id)
-      # course_info.each do |info|
-      #   advanced_info = AdvancedInfo.find(id: info.advanced_info_id)
-      #   results << AdvancedInfoRepresenter.new(advanced_info).to_json
-      # end
+      course = Course.find(id: course_id)
+      title = course.title
+      course_info = CourseAdvancedInfo.where(course_id: course_id).all
 
-
-      # print AdvancedInfo.find(id: course_info.advanced_info_id)
-      a = AdvancedInfo.find(id: course_info.advanced_info_id)
-      results = CourseAdvancedInfos.new(
-        course_info.time,
-        CourseAdvancedInfosRepresenter.new(AdvancedInfo.find(id: course_info.advanced_info_id))
-        # course_info.each do |info|
-        #   AdvancedInfo.find(id: info.advanced_info_id)
-        # end
+      all_infos = AllInfos.new(
+        title,
+        course_info.each do |info|
+          infos = CourseAdvancedInfos.new(
+            info.time,
+            AdvancedInfoRepresenter.new(AdvancedInfo.find(id: info.advanced_info_id))
+          )
+          infos
+        end
       )
-      print JSON.parse(results.to_json)
-      # r = CourseAdvancedInfosRepresenter.new(results).to_json
-      # print r
-      # refined_results_youtube = SearchResultsSingleSource.new(
-      #   results_youtube.count,
-      #   results_youtube.map do |course|
-      #     search_results_course = SearchResultsCourse.new(
-      #       course['title'],
-      #       course['description'],
-      #       course['url'],
-      #       course['image']
-      #     )
-      #     search_results_course
-      #   end
-      # )
 
-      print results
       content_type 'application/json'
-      results.to_json
+      all_infos.to_h.to_json
     rescue 
       halt 404, 'Courses not found'     
     end
