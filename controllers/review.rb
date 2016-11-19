@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require 'date'
 
 # Share Learning API web service
 class ShareLearningAPI < Sinatra::Base

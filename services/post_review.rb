@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'date'
 
 # Loads data from Facebook group to database
 class PostReview
