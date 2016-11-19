@@ -8,7 +8,6 @@ class PostReview
 
   register :validate_course, lambda { |params|
     course_id = params[:course_id]
-    puts course_id
     course = Course.find(id: course_id)    
     
     if course
@@ -20,7 +19,6 @@ class PostReview
 
   register :validate_content, lambda { |params|
     body_params = JSON.parse params[:request]
-    puts body_params
     review_content = body_params['content']
     
     if review_content
