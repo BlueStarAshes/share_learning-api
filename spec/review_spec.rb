@@ -37,7 +37,7 @@ describe 'Review Routes' do
     end
 
     it '(BAD) should report error if given wrong course id' do
-      post "api/v0.1/reviews/#{SAD_COURSE_ID}",
+      post "api/v0.1/reviews/#{BAD_COURSE_ID}",
            { url: SAD_REVIEW_CONTENT }.to_json,
            'CONTENT_TYPE' => 'application/json'
 
@@ -50,17 +50,21 @@ describe 'Review Routes' do
       DB[:reviews].delete
       DB[:courses].delete
       post 'api/v0.1/courses',
-           'CONTENT_TYPE' => 'application/json'      
+           'CONTENT_TYPE' => 'application/json'
     end
 
     it '(HAPPY) should successfully read course reviews' do
-      get "api/v0.1/course/#{HAPPY_COURSE_ID}/reviews/?"
+      post "api/v0.1/reviews/#{Course.first.id}",
+           { content: HAPPY_REVIEW_CONTENT }.to_json,
+           'CONTENT_TYPE' => 'application/json'
+
+      get "api/v0.1/course/#{Course.first.id}/reviews/?"
 
       last_response.status.must_equal 200
       last_response.content_type.must_equal 'application/json'
       course_data = JSON.parse(last_response.body)
-      course_data['id'].must_be :>, 0
-      course_data['content'].length.must_be :>, 0
+      course_data[0]['id'].must_be :>, 0
+      course_data[0]['content'].length.must_be :>, 0
 
     end
 
@@ -71,7 +75,7 @@ describe 'Review Routes' do
     end
 
     it '(SAD) should report error if reviews are not found' do
-      get "api/v0.1/course/#{SAD_COURSE_ID}/reviews/?"
+      get "api/v0.1/course/#{Course.last.id}/reviews/?"
 
       last_response.status.must_equal 404
     end

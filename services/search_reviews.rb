@@ -21,9 +21,6 @@ class SearchReviews
     course_reviews_mapping = CourseReviewsMappingSearchResultsRepresenter.new(results).to_json
     course_reviews_mapping = JSON.parse(course_reviews_mapping)
 
-    puts course_reviews_mapping['course_reviews_mapping']
-
-
     if course_reviews_mapping['course_reviews_mapping'].empty?
       Left(Error.new(:not_found, 'There is no review for the course'))
     else

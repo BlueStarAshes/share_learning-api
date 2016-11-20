@@ -28,7 +28,7 @@ describe 'Course Routes' do
     end
 
     it '(SAD) should report error if course is not found' do
-      get "api/v0.1/courses/#{SAD_COURSE_ID}"
+      get "api/v0.1/courses/#{BAD_COURSE_ID}"
 
       last_response.status.must_equal 404
     end
