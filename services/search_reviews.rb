@@ -18,27 +18,28 @@ class SearchReviews
 
   register :validate_course_review, lambda { |course_id|
     results = CourseReviewsMappingSearchResults.new(Coursereview.where(course_id: course_id).all)
-    
-    if results
-      course_reviews_mapping = CourseReviewsMappingSearchResultsRepresenter.new(results).to_json
-      course_reviews_mapping = JSON.parse(course_reviews_mapping)      
-      
-      Right(course_reviews_mapping)
-    else
+    course_reviews_mapping = CourseReviewsMappingSearchResultsRepresenter.new(results).to_json
+    course_reviews_mapping = JSON.parse(course_reviews_mapping)
+
+    puts course_reviews_mapping['course_reviews_mapping']
+
+
+    if course_reviews_mapping['course_reviews_mapping'].empty?
       Left(Error.new(:not_found, 'There is no review for the course'))
+    else
+      Right(course_reviews_mapping)      
     end
   }
 
   register :search_reviews, lambda { |course_reviews_mapping|
-    puts course_reviews_mapping
-    begin
-      course_reviews = course_reviews_mapping['course_reviews_mapping'].map do |review| 
-        ReviewsSearchResults.new(Review.where(id: review['review_id']))
-      end
+    course_reviews = course_reviews_mapping['course_reviews_mapping'].map do |review| 
+      ReviewsSearchResults.new(Review.where(id: review['review_id']))
+    end
 
-      Right(course_reviews)
-    rescue
+    if course_reviews.empty?
       Left(Error.new(:bad_request, 'Cannot find the reviews'))
+    else
+      Right(course_reviews)      
     end
   }
 
