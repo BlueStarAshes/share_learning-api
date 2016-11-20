@@ -44,4 +44,37 @@ describe 'Review Routes' do
       last_response.status.must_equal 404
     end    
   end
+
+  describe 'Read course reviews' do
+    before do
+      DB[:reviews].delete
+      DB[:courses].delete
+      post 'api/v0.1/courses',
+           'CONTENT_TYPE' => 'application/json'      
+    end
+
+    it '(HAPPY) should successfully read course reviews' do
+      get "api/v0.1/course/#{HAPPY_COURSE_ID}/reviews/?"
+
+      last_response.status.must_equal 200
+      last_response.content_type.must_equal 'application/json'
+      course_data = JSON.parse(last_response.body)
+      course_data['id'].must_be :>, 0
+      course_data['content'].length.must_be :>, 0
+
+    end
+
+    it '(SAD) should report error if course is not found' do
+      get "api/v0.1/course/#{BAD_COURSE_ID}/reviews/?"
+
+      last_response.status.must_equal 404
+    end
+
+    it '(SAD) should report error if reviews are not found' do
+      get "api/v0.1/course/#{SAD_COURSE_ID}/reviews/?"
+
+      last_response.status.must_equal 404
+    end
+  
+  end  
 end
