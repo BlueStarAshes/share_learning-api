@@ -27,10 +27,24 @@ describe 'Course Routes' do
       course_data['title'].length.must_be :>, 0
     end
 
-    it '(SAD) should report if a course is not found' do
-      get "api/v0.1/courses/#{SAD_COURSE_ID}"
+    it '(SAD) should report error if course is not found' do
+      get "api/v0.1/courses/#{BAD_COURSE_ID}"
 
       last_response.status.must_equal 404
     end
   end
+
+  describe 'Stored course information to database' do
+    before do
+      DB[:courses].delete
+    end
+
+    it '(HAPPY) should store course information to database successfully' do
+      post 'api/v0.1/courses',
+           'CONTENT_TYPE' => 'application/json'      
+
+      last_response.status.must_equal 200
+      Course.count.must_be :>=, 1
+    end
+  end  
 end

@@ -32,7 +32,7 @@ VCR.configure do |c|
   end
 end
 
-SAD_COURSE_ID = '0'
+BAD_COURSE_ID = '0'
 
 
 HAPPY_REVIEW_CONTENT = 'HAPPY review'
