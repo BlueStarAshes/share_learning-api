@@ -11,6 +11,13 @@ describe 'Advanced Info Routes' do
   end
 
   describe 'Add new advanced info' do
+    before do
+      DB[:courses].delete
+      DB[:advanced_infos].delete
+      post 'api/v0.1/courses',
+           'CONTENT_TYPE' => 'application/json'      
+    end
+
     it '(HAPPY) should successfully add advanced info' do
       post "api/v0.1/advanced_info/#{Course.first.id}",
            {prerequisite: HAPPY_PREREQUISITE}.to_json,
