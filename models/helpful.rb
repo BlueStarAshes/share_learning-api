@@ -2,5 +2,5 @@
 
 # Represents a Course's stored information
 class Helpful < Sequel::Model
-  one_to_one :helpfulForCourse
+  one_to_one :courseHelpful
 end
