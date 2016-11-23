@@ -5,7 +5,9 @@ Sequel.migration do
   change do
     create_table(:course_prerequisites) do
       primary_key :id
-      Date :time
+      foreign_key :course_id
+      foreign_key :prerequisite_id   
+      String :time
     end
   end
 end
