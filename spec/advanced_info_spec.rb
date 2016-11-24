@@ -14,6 +14,7 @@ describe 'Advanced Info Routes' do
     before do
       DB[:courses].delete
       DB[:advanced_infos].delete
+      DB[:course_advanced_infos].delete
       post 'api/v0.1/courses',
            'CONTENT_TYPE' => 'application/json'      
     end
