@@ -3,7 +3,7 @@ require 'sequel'
 
 Sequel.migration do
   change do
-    create_table(:difficultys) do
+    create_table(:difficulties) do
       primary_key :id
       String :rating
     end
