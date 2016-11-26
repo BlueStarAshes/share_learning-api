@@ -19,17 +19,20 @@ class SearchCourses
 
   register :search_coursera, lambda { |input|
     begin
-      results_coursera =
-        Coursera::CourseraCourses.find.search_courses(:all, input[:keyword])
+      # results_coursera =
+      # Coursera::CourseraCourses.find.search_courses(:all, input[:keyword])
+      results_coursera = Course.where(source: 'Coursera').where(
+        Sequel.join([:title, :introduction]).ilike("%#{input[:keyword]}%")
+      ).all
 
       refined_results_coursera = SearchResultsSingleSource.new(
         results_coursera.count,
         results_coursera.map do |course|
           search_results_course = SearchResultsCourse.new(
-            course[:course_name],
-            course[:description],
-            course[:link],
-            course[:photo_url]
+            course.title,
+            course.introduction,
+            course.link,
+            course.photo
           )
           search_results_course
         end
@@ -49,17 +52,20 @@ class SearchCourses
 
   register :search_udacity, lambda { |input|
     begin
-      results_udacity =
-        Udacity::UdacityCourse.find.acquire_courses_by_keywords(input[:keyword])
+      # results_udacity =
+      # Udacity::UdacityCourse.find.acquire_courses_by_keywords(input[:keyword])
+      results_udacity = Course.where(source: 'Udacity').where(
+        Sequel.join([:title, :introduction]).ilike("%#{input[:keyword]}%")
+      ).all
 
       refined_results_udacity = SearchResultsSingleSource.new(
         results_udacity.count,
         results_udacity.map do |course|
           search_results_course = SearchResultsCourse.new(
-            course[:title],
-            course[:intro],
-            course[:link],
-            course[:image]
+            course.title,
+            course.introduction,
+            course.link,
+            course.photo
           )
           search_results_course
         end
