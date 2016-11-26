@@ -32,11 +32,11 @@ VCR.configure do |c|
   end
 end
 
-SAD_COURSE_ID = '0'
+BAD_COURSE_ID = '0'
 
 
 HAPPY_REVIEW_CONTENT = 'HAPPY review'
 SAD_REVIEW_CONTENT = 'SAD review'
 
 HAPPY_PREREQUISITE = 'HAPPY prerequisite'
-SAD_PREREQUISITE = 'SAD prerequisite'
+HAPPY_ADVANCEDINFO = {"prerequisite": "happy", "difficulty":1,"helpful":4}.to_json

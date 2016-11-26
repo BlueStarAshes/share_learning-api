@@ -13,6 +13,12 @@ describe 'Search Routes' do
   end
 
   describe 'Retrieve resource from Coursera, Udacity, and Youtube' do
+    before do
+      DB[:courses].delete
+      post 'api/v0.1/courses',
+           'CONTENT_TYPE' => 'application/json'
+    end
+
     it 'HAPPY: should retrieve relating resource with the HAPPY keyword' do
       get "api/v0.1/search/#{HAPPY_SEARCH_KEYWORD}"
 

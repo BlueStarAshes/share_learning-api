@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # Share Learning API web service
+# configure based on environment
 class ShareLearningAPI < Sinatra::Base
   extend Econfig::Shortcut
 
@@ -13,7 +14,14 @@ class ShareLearningAPI < Sinatra::Base
     YouTube::YouTubeAPI.config.update(api_key: config.YOUTUBE_API_KEY)
   end
 
+  after do
+    content_type 'application/json'
+  end
+
   get '/?' do
-    "ShareLearningAPI latest version endpoints are at: /#{API_VER}/"
+    {
+      status: 'OK',
+      message: "ShareLearningAPI latest version endpoints are at: /#{API_VER}/"
+    }.to_json
   end
 end

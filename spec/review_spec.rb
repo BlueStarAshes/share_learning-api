@@ -24,7 +24,6 @@ describe 'Review Routes' do
            'CONTENT_TYPE' => 'application/json'
 
       last_response.status.must_equal 200
-      last_response.body.must_include 'Successfully'
 
       Review.count.must_be :>=, 1
     end
@@ -34,17 +33,52 @@ describe 'Review Routes' do
            { url: SAD_REVIEW_CONTENT }.to_json,
            'CONTENT_TYPE' => 'application/json'
 
-      last_response.status.must_equal 400
-      last_response.body.must_include 'no content'
+      last_response.status.must_equal 422
     end
 
     it '(BAD) should report error if given wrong course id' do
-      post "api/v0.1/reviews/#{SAD_COURSE_ID}",
+      post "api/v0.1/reviews/#{BAD_COURSE_ID}",
            { url: SAD_REVIEW_CONTENT }.to_json,
            'CONTENT_TYPE' => 'application/json'
 
-      last_response.status.must_equal 400
-      last_response.body.must_include SAD_COURSE_ID
+      last_response.status.must_equal 404
     end    
   end
+
+  describe 'Read course reviews' do
+    before do
+      DB[:reviews].delete
+      DB[:courses].delete
+      post 'api/v0.1/courses',
+           'CONTENT_TYPE' => 'application/json'
+    end
+
+    it '(HAPPY) should successfully read course reviews' do
+      post "api/v0.1/reviews/#{Course.first.id}",
+           { content: HAPPY_REVIEW_CONTENT }.to_json,
+           'CONTENT_TYPE' => 'application/json'
+
+      get "api/v0.1/course/#{Course.first.id}/reviews/?"
+
+      last_response.status.must_equal 200
+      last_response.content_type.must_equal 'application/json'
+      course_data = JSON.parse(last_response.body)
+      course_data[0]['id'].must_be :>, 0
+      course_data[0]['content'].length.must_be :>, 0
+
+    end
+
+    it '(SAD) should report error if course is not found' do
+      get "api/v0.1/course/#{BAD_COURSE_ID}/reviews/?"
+
+      last_response.status.must_equal 404
+    end
+
+    it '(SAD) should report error if reviews are not found' do
+      get "api/v0.1/course/#{Course.last.id}/reviews/?"
+
+      last_response.status.must_equal 404
+    end
+  
+  end  
 end

@@ -9,10 +9,17 @@ class ShareLearningAPI < Sinatra::Base
       coursera_num = Coursera::CourseraApi.total_course_num
       udacity_num = Udacity::UdacityAPI.total_course_num
 
+      overview_result = OverviewResult.new(
+        coursera_num,
+        udacity_num,
+        'inf'
+      )
+
       content_type 'application/json'
-      { coursera: coursera_num, udacity: udacity_num, youtube: 'inf' }.to_json
-    rescue
-      halt 404, 'Overview not found'
+      OverviewResultRepresenter.new(overview_result).to_json
+      # { coursera: coursera_num, udacity: udacity_num, youtube: 'inf' }.to_json
+    # rescue
+      # halt 404, 'Overview not found'
     end
   end
 end
