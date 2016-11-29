@@ -3,5 +3,5 @@
 # Represents a Course's stored information
 class Review < Sequel::Model
   one_to_one :reviewOnCourse
-  one_to_many :reactionOnReviews
+  one_to_many :reviewReactions
 end
