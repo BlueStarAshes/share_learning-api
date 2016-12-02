@@ -6,7 +6,7 @@ Sequel.migration do
     create_table(:course_helpfuls) do
       primary_key :id
       foreign_key :course_id
-      foreign_key :helpful_id        
+      foreign_key :helpful_id
       String :time
     end
   end

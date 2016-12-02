@@ -8,8 +8,8 @@ class PostReview
 
   register :validate_course, lambda { |params|
     course_id = params[:course_id]
-    course = Course.find(id: course_id)    
-    
+    course = Course.find(id: course_id)
+
     if course
       Right(params)
     else
@@ -20,7 +20,7 @@ class PostReview
   register :validate_content, lambda { |params|
     body_params = JSON.parse params[:request]
     review_content = body_params['content']
-    
+
     if review_content
       Right({course_id: params[:course_id], review_content: review_content})
     else
@@ -45,7 +45,7 @@ class PostReview
 
   register :create_review_course_mapping, lambda { |params|
     begin
-      Coursereview.create(
+      CourseReview.create(
         course_id: params[:course_id],
         review_id: params[:review].id
       )

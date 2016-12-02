@@ -6,5 +6,5 @@ require_relative 'course_reviews'
 class CourseReviewsMappingSearchResultsRepresenter < Roar::Decorator
   include Roar::JSON
 
-  collection :course_reviews_mapping, extend: CourseReviewsRepresenter, class: Coursereview
+  collection :course_reviews_mapping, extend: CourseReviewsRepresenter, class: CourseReview
 end
