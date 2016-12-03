@@ -10,6 +10,25 @@ Rake::TestTask.new(:spec) do |t|
   t.warning = false
 end
 
+namespace :run do
+  task :dev do
+    sh 'rerun "rackup -p 9292"'
+  end
+
+  task :test do
+    loop do
+      puts 'Setting up test environment'
+      ENV['RACK_ENV'] = 'test'
+      Rake::Task['db:_setup'].execute
+      Rake::Task['db:reset'].execute
+      puts 'Populating test database'
+      
+      LoadCoursesFromAPI.call('')
+      sh 'rerun "rackup -p 3000"'
+    end
+  end
+end
+
 namespace :db do
   task :_setup do
     require 'sequel'
