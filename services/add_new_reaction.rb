@@ -14,7 +14,7 @@ class AddNewReaction
     else
       Left(
         Error.new(
-          :bad_request,
+          :unprocessable_entity,
           'Type content is empty'
         )
       )
@@ -28,7 +28,7 @@ class AddNewReaction
     if results.count > 0
       Left(
         Error.new(
-          :cannot_process,
+          :unprocessable_entity,
           'An instance of Reaction with the same type already exists'
         )
       )
