@@ -22,6 +22,7 @@ OVERVIEW_CASSETTE = 'overview'.freeze
 COURSES_CASSETTE = 'courses'.freeze
 REVIEWS_CASSETTE = 'reviews'.freeze
 ADVANCEDINFO_CASSETTE = 'advanced_info'.freeze
+REACTIONS_CASSETTE = 'reactions'.freeze
 
 VCR.configure do |c|
   c.cassette_library_dir = CASSETTES_FOLDER
@@ -34,9 +35,14 @@ end
 
 BAD_COURSE_ID = '0'
 
-
 HAPPY_REVIEW_CONTENT = 'HAPPY review'
 SAD_REVIEW_CONTENT = 'SAD review'
 
 HAPPY_PREREQUISITE = 'HAPPY prerequisite'
 HAPPY_ADVANCEDINFO = {"prerequisite": "happy", "difficulty":1,"helpful":4}.to_json
+
+HAPPY_REACTION = { type: 'Like' }.to_json
+SAD_REACTION = { sad: 'Like' }.to_json
+
+BAD_REVIEW_ID = 0
+BAD_REACTION_ID = 0
