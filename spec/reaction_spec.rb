@@ -90,7 +90,7 @@ describe 'Reaction Routes' do
            }.to_json,
            'CONTENT_TYPE' => 'application/json'
 
-      last_response.status.must_equal 400
+      last_response.status.must_equal 422
     end
 
     it '(BAD) should report error if given not existing review or reacion id' do
