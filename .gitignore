@@ -4,4 +4,6 @@ spec/fixtures/cassettes
 .DS_Store
 db/*.*
 .bundle/
+.rake_tasks~
+
 
