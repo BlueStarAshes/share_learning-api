@@ -7,7 +7,7 @@ Sequel.migration do
       primary_key :id
       foreign_key :course_id
       foreign_key :helpful_id
-      String :time
+      String :created_time
     end
   end
 end
