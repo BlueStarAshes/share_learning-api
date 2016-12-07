@@ -7,32 +7,14 @@ class ShareLearningAPI < Sinatra::Base
 
   # find helpful rating of a course
   get "/#{API_VER}/course/helpful/:course_id/?" do
-    course_id = params[:course_id]
+    result = ShowHelpful.call(params)
 
-    begin
-      course = Course.find(id: course_id)
-    rescue
+    if result.success?
       content_type 'text/plain'
-      halt 404, "Cannot find course"      
-    end
-
-    results = CourseHelpfulsMappingSearchResults.new(CourseHelpful.where(course_id: course_id).all)
-    course_helpful_mapping = CourseHelpfulsMappingSearchResultsRepresenter.new(results).to_json
-    course_helpful_mapping = JSON.parse(course_helpful_mapping)
-    
-    total_rating = 0
-    course_helpful_mapping['course_helpfuls_mapping'].each do |helpful|
-      results = HelpfulRepresenter.new(Helpful.find(id: helpful['helpful_id'])).to_json
-      results = JSON.parse(results)
-      rating = results['rating']
-      total_rating += rating
-    end
-    avg_rating = total_rating / course_helpful_mapping['course_helpfuls_mapping'].length
-    print avg_rating
-
-    content_type 'text/plain'
-    "The average helpful rating of course #{course_id} is : #{avg_rating}"
-    
+      "The average helpful rating of course #{params[:course_id]} is : #{result.value}"
+    else
+      ErrorRepresenter.new(result.value).to_status_response
+    end    
   end
 
   # add helpful rating to course
