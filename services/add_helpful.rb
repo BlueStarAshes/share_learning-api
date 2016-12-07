@@ -18,10 +18,19 @@ class AddHelpful
     end
   }
 
+  register :validate_rating, lambda { |params|
+    my_rating = params[:rating]
+
+    if my_rating >= 0 && my_rating <=5
+      Right(params)
+    else
+      Left(Error.new(:unprocessable_entity, 'rating must be an integer between 0~5'))
+    end
+  }
+
   register :add_helpful, lambda { |params|
     begin
       my_rating = params[:rating]
-      print my_rating
       helpful = Helpful.create(rating: my_rating)
 
       Right({helpful: helpful, course_id: params[:course_id]})
@@ -39,7 +48,7 @@ class AddHelpful
        created_time: current_time
       )
 
-      Right('Successfully add helpful')
+      Right('Successfully add helpful rating')
     rescue
       Left(Error.new(:bad_request, 'Failed to create helpful rating for course'))
     end
@@ -48,6 +57,7 @@ class AddHelpful
   def self.call(params)
     Dry.Transaction(container: self) do
       step :validate_course
+      step :validate_rating
       step :add_helpful
       step :add_helpful_course_mapping
     end.call(params)
