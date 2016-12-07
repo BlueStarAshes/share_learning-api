@@ -20,22 +20,18 @@ class ShareLearningAPI < Sinatra::Base
     course_helpful_mapping = CourseHelpfulsMappingSearchResultsRepresenter.new(results).to_json
     course_helpful_mapping = JSON.parse(course_helpful_mapping)
     
-    course_helpfuls = course_helpful_mapping['course_helpfuls_mapping'].map do |helpful|
-      HelpfulsSearchResults.new(Helpful.find(id: helpful['helpful_id']))
+    total_rating = 0
+    course_helpful_mapping['course_helpfuls_mapping'].each do |helpful|
+      results = HelpfulRepresenter.new(Helpful.find(id: helpful['helpful_id'])).to_json
+      results = JSON.parse(results)
+      rating = results['rating']
+      total_rating += rating
     end
-    #print course_helpfuls
-    
-    output = []
-    course_helpfuls.each do |course_helpful|
-      print course_helpful
-      helpful = HelpfulsSearchResultsRepresenter.new(course_helpful).to_json
-      #helpful = JSON.parse(helpful)
-      #print helpful
-      #output.push(helpful['rating'][0])
-    end
+    avg_rating = total_rating / course_helpful_mapping['course_helpfuls_mapping'].length
+    print avg_rating
 
-    content_type 'application/json'
-    output.to_json
+    content_type 'text/plain'
+    "The average helpful rating of course #{course_id} is : #{avg_rating}"
     
   end
 
@@ -54,4 +50,5 @@ class ShareLearningAPI < Sinatra::Base
     else
       ErrorRepresenter.new(result.value).to_status_response
     end
+  end
 end
