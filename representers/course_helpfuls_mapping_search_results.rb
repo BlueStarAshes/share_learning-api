@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-require_relative 'review'
-require_relative 'course_reviews'
+require_relative 'helpful'
+require_relative 'course_helpfuls'
 
 # Represents the search results from 'Coursereview' table
 class CourseHelpfulsMappingSearchResultsRepresenter < Roar::Decorator
