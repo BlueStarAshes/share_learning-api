@@ -21,7 +21,7 @@ class AddHelpful
   register :validate_rating, lambda { |params|
     my_rating = params[:rating]
 
-    if my_rating >= 0 && my_rating <=5
+    if my_rating >= 0.0 && my_rating <= 5.0
       Right(params)
     else
       Left(Error.new(:unprocessable_entity, 'rating must be an integer between 0~5'))

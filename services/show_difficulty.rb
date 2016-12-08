@@ -23,7 +23,6 @@ class ShowDifficulty
 
     if course_difficulty_mapping['course_difficulties_mapping'].empty?
       Left(Error.new(:not_found, 'There is no difficulty rating for the course'))
-      # Left(course_difficulty_mapping)
     else
       Right(course_difficulty_mapping)
     end
