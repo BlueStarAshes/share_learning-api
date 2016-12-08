@@ -21,21 +21,21 @@ describe 'Helpful Routes' do
 
     it '(HAPPY) should successfully add a new helpful rating' do
       post "api/v0.1/helpful/#{Course.first.id}",
-           { rating: HAPPY_HELPFUL_RATING }.to_json
+           { rating: HAPPY_RATING }.to_json
 
       Helpful.count.must_be :>=, 1
     end
 
     it '(BAD) should report error if given wrong course id' do
       post "api/v0.1/helpful/#{BAD_COURSE_ID}",
-           { rating: HAPPY_HELPFUL_RATING }.to_json
+           { rating: HAPPY_RATING }.to_json
 
       last_response.status.must_equal 404
     end  
 
     it '(BAD) should report error if rating is not an integer' do
       post "api/v0.1/helpful/#{Course.first.id}",
-           { rating: BAD_HELPFUL_RATING }.to_json
+           { rating: BAD_RATING }.to_json
 
       last_response.status.must_equal 422
     end
@@ -52,7 +52,7 @@ describe 'Helpful Routes' do
 
     it '(HAPPY) should successfully read course helpful information' do
       post "api/v0.1/helpful/#{Course.first.id}",
-           { rating: HAPPY_HELPFUL_RATING }.to_json
+           { rating: HAPPY_RATING }.to_json
 
       get "api/v0.1/course/helpful/#{Course.first.id}/?"
 
