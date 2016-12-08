@@ -21,7 +21,6 @@ SEARCH_CASSETTE = 'search'.freeze
 OVERVIEW_CASSETTE = 'overview'.freeze
 COURSES_CASSETTE = 'courses'.freeze
 REVIEWS_CASSETTE = 'reviews'.freeze
-ADVANCEDINFO_CASSETTE = 'advanced_info'.freeze
 REACTIONS_CASSETTE = 'reactions'.freeze
 HELPFUL_CASSETTE = 'helpful'.freeze
 DIFFICULTY_CASSETTE = 'difficulty'.freeze
@@ -40,8 +39,6 @@ BAD_COURSE_ID = '0'
 
 HAPPY_REVIEW_CONTENT = 'HAPPY review'
 SAD_REVIEW_CONTENT = 'SAD review'
-
-HAPPY_ADVANCEDINFO = {"prerequisite": "happy", "difficulty":1,"helpful":4}.to_json
 
 HAPPY_REACTION = { type: 'Like' }.to_json
 SAD_REACTION = { sad: 'Like' }.to_json
