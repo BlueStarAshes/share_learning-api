@@ -3,7 +3,7 @@ require 'date'
 
 
 # Loads data from Facebook group to database
-class AddHelpful
+class AddDifficulty
   extend Dry::Monads::Either::Mixin
   extend Dry::Container::Mixin
 
@@ -28,29 +28,29 @@ class AddHelpful
     end
   }
 
-  register :add_helpful, lambda { |params|
+  register :add_difficulty, lambda { |params|
     begin
       my_rating = params[:rating]
-      helpful = Helpful.create(rating: my_rating)
+      difficulty = Difficulty.create(rating: my_rating)
 
-      Right({helpful: helpful, course_id: params[:course_id]})
+      Right({difficulty: difficulty, course_id: params[:course_id]})
     rescue
-      Left(Error.new(:bad_request, 'Failed to create helpful rating for course'))
+      Left(Error.new(:bad_request, 'Failed to create difficulty rating for course'))
     end
   }
 
-  register :add_helpful_course_mapping, lambda { |params|
+  register :add_difficulty_course_mapping, lambda { |params|
     begin
       current_time = DateTime.now.strftime("%F %T")
-      CourseHelpful.create(
+      CourseDifficulty.create(
        course_id: params[:course_id],
-       helpful_id: params[:helpful].id,
+       difficulty_id: params[:difficulty].id,
        created_time: current_time
       )
 
-      Right('Successfully add helpful rating')
+      Right('Successfully add difficulty rating')
     rescue
-      Left(Error.new(:bad_request, 'Failed to create helpful rating for course'))
+      Left(Error.new(:bad_request, 'Failed to create difficulty rating for course'))
     end
   }
 
@@ -58,8 +58,8 @@ class AddHelpful
     Dry.Transaction(container: self) do
       step :validate_course
       step :validate_rating
-      step :add_helpful
-      step :add_helpful_course_mapping
+      step :add_difficulty
+      step :add_difficulty_course_mapping
     end.call(params)
   end
 end
