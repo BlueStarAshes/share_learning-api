@@ -1,0 +1,1 @@
+Prerequisites = Struct.new :course_name
