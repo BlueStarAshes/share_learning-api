@@ -4,6 +4,16 @@
 class ShareLearningAPI < Sinatra::Base
   extend Econfig::Shortcut
 
+  get "/#{API_VER}/course/prerequisite/:course_id/?" do
+    results = ShowPrerequisite.call(params)
+
+    if results.success?
+      AllCoursePrerequisitesRepresenter.new(results.value).to_json
+    else
+      ErrorRepresenter.new(results.value).to_status_response
+    end    
+  end
+
   post "/#{API_VER}/prerequisite/:course_id/?" do
     course_id = params[:course_id]
     body_params = JSON.parse request.body.read
