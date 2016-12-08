@@ -5,7 +5,7 @@ Sequel.migration do
   change do
     create_table(:helpfuls) do
       primary_key :id
-      Integer :rating
+      Float :rating
     end
   end
 end
