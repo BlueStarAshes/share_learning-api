@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'date'
 
-# Adds prerequisite to database
+# Add prerequisite to database
 class AddPrerequisite
   extend Dry::Monads::Either::Mixin
   extend Dry::Container::Mixin

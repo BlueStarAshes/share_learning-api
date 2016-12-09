@@ -21,21 +21,21 @@ describe 'Prerequisite Routes' do
 
     it '(HAPPY) should successfully add a new prerequisite' do
       post "api/v0.1/prerequisite/#{Course.first.id}",
-           {prerequisite: HAPPY_PREREQUISITE}.to_json
+           { prerequisite: HAPPY_PREREQUISITE }.to_json
 
       Prerequisite.count.must_be :>=, 1
     end
 
     it '(BAD) should report error if given wrong course id' do
       post "api/v0.1/prerequisite/#{BAD_COURSE_ID}",
-           {prerequisite: HAPPY_PREREQUISITE}.to_json
+           { prerequisite: HAPPY_PREREQUISITE }.to_json
 
       last_response.status.must_equal 404
     end  
 
     it '(BAD) should report error if prerequisite is empty' do
       post "api/v0.1/prerequisite/#{Course.first.id}",
-           {prerequisite: BAD_PREREQUISITE}.to_json
+           { prerequisite: BAD_PREREQUISITE }.to_json
 
       last_response.status.must_equal 422
     end
@@ -52,7 +52,7 @@ describe 'Prerequisite Routes' do
 
     it '(HAPPY) should successfully read course prerequisite information' do
       post "api/v0.1/prerequisite/#{Course.first.id}",
-           {prerequisite: HAPPY_PREREQUISITE }.to_json
+           { prerequisite: HAPPY_PREREQUISITE }.to_json
 
       get "api/v0.1/course/prerequisite/#{Course.first.id}/?"
 

@@ -11,7 +11,7 @@ class ShowPrerequisite
     if course
       Right(course_id)
     else
-      Left(Error.new(:not_found, 'Course not found'))
+      Left(Error.new(:not_found, 'Course not found' ))
     end
   }
 
