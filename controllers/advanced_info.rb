@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 # require 'json'
+
 # Share Learning API web service
 class ShareLearningAPI < Sinatra::Base
   extend Econfig::Shortcut
