@@ -28,7 +28,7 @@ describe 'Search Routes' do
 
       available_external_apis = %w(coursera udacity youtube)
       external_api_info_keys = %w(count courses)
-      course_info_keys = %w(title resource_url introduction photo_url)
+      course_info_keys = %w(id title resource_url introduction photo_url)
 
       available_external_apis.each do |external_api|
         resource_data.key?(external_api).must_equal true
