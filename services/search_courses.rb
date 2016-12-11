@@ -29,6 +29,7 @@ class SearchCourses
         results_coursera.count,
         results_coursera.map do |course|
           search_results_course = SearchResultsCourse.new(
+            course.id,
             course.title,
             course.introduction,
             course.link,
@@ -62,6 +63,7 @@ class SearchCourses
         results_udacity.count,
         results_udacity.map do |course|
           search_results_course = SearchResultsCourse.new(
+            course.id,
             course.title,
             course.introduction,
             course.link,
@@ -92,6 +94,7 @@ class SearchCourses
         results_youtube.count,
         results_youtube.map do |course|
           search_results_course = SearchResultsCourse.new(
+            -1, # Since we still used external API of YouTube here, so no id
             course['title'],
             course['description'],
             course['url'],
