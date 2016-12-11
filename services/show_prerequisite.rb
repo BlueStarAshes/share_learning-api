@@ -27,7 +27,8 @@ class ShowPrerequisite
   register :get_course_prerequisite, lambda { |results|
     all = AllCoursePrerequisites.new(
       results.map do |item|
-        Prerequisites.new(Prerequisite.find(id: item.prerequisite_id))
+        p = Prerequisite.find(id: item.prerequisite_id)
+        Prerequisites.new(p.id, p.course_name)
       end
     )
     Right(all)
