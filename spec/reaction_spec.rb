@@ -116,8 +116,7 @@ describe 'Reaction Routes' do
       next while Course.count < 1
 
       post "api/v0.1/prerequisite/#{Course.first.id}",
-           { prerequisite: HAPPY_PREREQUISITE }.to_json,
-           'CONTENT_TYPE' => 'application/json'
+           { prerequisite: HAPPY_PREREQUISITE }.to_json
       post 'api/v0.1/reactions/new_reaction/',
            HAPPY_REACTION,
            'CONTENT_TYPE' => 'application/json'
@@ -203,7 +202,6 @@ describe 'Reaction Routes' do
     it '(HAPPY) should successfully read course prerequisite information' do
       post "api/v0.1/prerequisite/#{Course.first.id}",
            { prerequisite: HAPPY_PREREQUISITE }.to_json
-           'CONTENT_TYPE' => 'application/json'
       post 'api/v0.1/reactions/new_reaction/',
            HAPPY_REACTION,
            'CONTENT_TYPE' => 'application/json'
