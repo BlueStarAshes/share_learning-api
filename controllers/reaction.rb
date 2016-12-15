@@ -27,4 +27,16 @@ class ShareLearningAPI < Sinatra::Base
       ErrorRepresenter.new(result.value).to_status_response
     end
   end
+
+  post "/#{API_VER}/reactions/new_prerequisite_reaction/?" do
+    input = { request: request.body.read }
+    result = AddNewPrerequisiteReaction.call(input)
+
+    if result.success?
+      content_type 'text/plain'
+      body result.value
+    else
+      ErrorRepresenter.new(result.value).to_status_response
+    end
+  end
 end
