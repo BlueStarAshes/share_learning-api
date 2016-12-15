@@ -3,5 +3,5 @@
 # Represents a Course's stored information
 class CoursePrerequisiteReaction < Sequel::Model
   many_to_one :reaction
-  many_to_one :coursePrerequisite
+  many_to_one :prerequisite
 end
