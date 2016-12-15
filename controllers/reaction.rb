@@ -4,6 +4,26 @@
 class ShareLearningAPI < Sinatra::Base
   extend Econfig::Shortcut
 
+  get "/#{API_VER}/prerequisite/reactions/:prerequisite_id/?" do
+    results = ShowPrerequisiteReactions.call(params)
+
+    if results.success?
+      AllReactionsRepresenter.new(results.value).to_json
+    else
+      ErrorRepresenter.new(results.value).to_status_response
+    end
+  end
+
+  get "/#{API_VER}/review/reactions/:review_id/?" do
+    results = ShowReviewReactions.call(params)
+
+    if results.success?
+      AllReactionsRepresenter.new(results.value).to_json
+    else
+      ErrorRepresenter.new(results.value).to_status_response
+    end
+  end
+
   post "/#{API_VER}/reactions/new_reaction/?" do
     input = { request: request.body.read }
     result = AddNewReaction.call(input)

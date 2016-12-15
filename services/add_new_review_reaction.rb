@@ -42,20 +42,6 @@ class AddNewReviewReaction
     end
   }
 
-  register :check_reaction_not_duplicate, lambda { |params|
-    review_id = params[:review_id]
-    reaction_id = params[:reaction_id]
-    course_review_reaction = ReviewReaction.find( \
-      review_id: review_id, reaction_id: reaction_id)
-
-    if course_review_reaction
-      Left(Error.new(:unprocessable_entity, \
-        'the reaction for this review has already existed'))
-    else
-      Right(params)
-    end
-  }
-
   register :create_review_reaction, lambda { |params|
     begin
       current_time = DateTime.now.strftime('%F %T')
@@ -76,7 +62,6 @@ class AddNewReviewReaction
     Dry.Transaction(container: self) do
       step :validate_ids
       step :check_ids_exist
-      step :check_reaction_not_duplicate
       step :create_review_reaction
     end.call(params)
   end

@@ -42,20 +42,6 @@ class AddNewPrerequisiteReaction
     end
   }
 
-  register :check_reaction_not_duplicate, lambda { |params|
-    prerequisite_id = params[:prerequisite_id]
-    reaction_id = params[:reaction_id]
-    course_prerequisite_reaction = CoursePrerequisiteReaction.find( \
-      prerequisite_id: prerequisite_id, reaction_id: reaction_id)
-
-    if course_prerequisite_reaction 
-      Left(Error.new(:unprocessable_entity, \
-        'the reaction for this prerequisite has already existed'))
-    else
-      Right(params)
-    end
-  }
-
   register :create_prerequisite_reaction, lambda { |params|
     begin
       current_time = DateTime.now.strftime('%F %T')
@@ -77,7 +63,6 @@ class AddNewPrerequisiteReaction
     Dry.Transaction(container: self) do
       step :validate_ids
       step :check_ids_exist
-      step :check_reaction_not_duplicate
       step :create_prerequisite_reaction
     end.call(params)
   end
