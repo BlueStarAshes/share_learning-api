@@ -3,5 +3,5 @@
 # Represents a Course's stored information
 class Reaction < Sequel::Model
   one_to_one :reviewReaction
-  one_to_one :reactionOnPrerequisiteForCourse
+  one_to_one :coursePrerequisiteReaction
 end

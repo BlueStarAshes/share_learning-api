@@ -4,6 +4,7 @@
 class PrerequisitesRepresenter < Roar::Decorator
   include Roar::JSON
 
-  property :id
+  property :course_prerequisite_id
+  property :prerequisite_id
   property :course_name
 end
