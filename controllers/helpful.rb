@@ -10,8 +10,8 @@ class ShareLearningAPI < Sinatra::Base
     result = ShowHelpful.call(params)
 
     if result.success?
-      content_type 'text/plain'
-      "The average helpful rating of course #{params[:course_id]} is : #{result.value}"
+      content_type 'application/json'
+      result.value.to_json
     else
       ErrorRepresenter.new(result.value).to_status_response
     end    
