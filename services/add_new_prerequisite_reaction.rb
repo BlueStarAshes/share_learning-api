@@ -8,26 +8,26 @@ class AddNewPrerequisiteReaction
 
   register :validate_ids, lambda { |params|
     body_params = JSON.parse params[:request]
-    prerequisite_id = body_params['prerequisite_id']
+    course_prerequisite_id = body_params['course_prerequisite_id']
     reaction_id = body_params['reaction_id']
 
-    if prerequisite_id && reaction_id
+    if course_prerequisite_id && reaction_id
       Right(
-        prerequisite_id: prerequisite_id,
+        course_prerequisite_id: course_prerequisite_id,
         reaction_id: reaction_id
       )
     else
       Left(
         Error.new(
           :unprocessable_entity,
-          'prerequisite_id or reaction_id not correct'
+          'params are not correct'
         )
       )
     end
   }
 
   register :check_ids_exist, lambda { |params|
-    prerequisite = Prerequisite.find(id: params[:prerequisite_id])
+    prerequisite = CoursePrerequisite.find(id: params[:course_prerequisite_id])
     reaction = Reaction.find(id: params[:reaction_id])
 
     if prerequisite && reaction
@@ -36,7 +36,7 @@ class AddNewPrerequisiteReaction
       Left(
         Error.new(
           :unprocessable_entity,
-          'prerequisite_id or reaction_id not correct'
+          'course_prerequisite_id or reaction_id not correct'
         )
       )
     end
@@ -47,7 +47,7 @@ class AddNewPrerequisiteReaction
       current_time = DateTime.now.strftime('%F %T')
 
       CoursePrerequisiteReaction.create(
-        prerequisite_id: params[:prerequisite_id],
+        course_prerequisite_id: params[:course_prerequisite_id],
         reaction_id: params[:reaction_id],
         time: current_time
       )

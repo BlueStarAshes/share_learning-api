@@ -5,18 +5,18 @@ class ShowPrerequisiteReactions
   extend Dry::Container::Mixin
 
   register :validate_prerequisite, lambda { |params|
-    prerequisite_id = params[:prerequisite_id]
-    prerequisite = Prerequisite.find(id: prerequisite_id)
+    course_prerequisite_id = params[:course_prerequisite_id]
+    course_prerequisite = CoursePrerequisite.find(id: course_prerequisite_id)
 
-    if prerequisite
-      Right(prerequisite_id)
+    if course_prerequisite
+      Right(course_prerequisite_id)
     else
-      Left(Error.new(:not_found, 'Prerequisite not found' ))
+      Left(Error.new(:not_found, 'Prerequisite of this course is not found' ))
     end
   }
 
-  register :validate_prerequisite_reactions, lambda { |prerequisite_id|
-    prerequisite_reaction = CoursePrerequisiteReaction.where(prerequisite_id: prerequisite_id).all
+  register :validate_prerequisite_reactions, lambda { |course_prerequisite_id|
+    prerequisite_reaction = CoursePrerequisiteReaction.where(course_prerequisite_id: course_prerequisite_id).all
     if prerequisite_reaction
       Right(prerequisite_reaction)
     else
@@ -30,7 +30,7 @@ class ShowPrerequisiteReactions
       reaction = Reaction.find(id: data.reaction_id)
       counts[reaction.type] += 1 
     end
-    print counts
+
     all = AllReactions.new(
       counts.map do |t, c|
         Reactions.new(t, c)

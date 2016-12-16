@@ -109,6 +109,7 @@ describe 'Reaction Routes' do
     before do
       DB[:courses].delete
       DB[:prerequisites].delete
+      DB[:course_prerequisites].delete
       DB[:reactions].delete
       DB[:course_prerequisite_reactions].delete
       post 'api/v0.1/courses',
@@ -125,7 +126,7 @@ describe 'Reaction Routes' do
     it '(HAPPY) should successfully create a new prerequisite_reaction' do
       post 'api/v0.1/reactions/new_prerequisite_reaction/',
            {
-             prerequisite_id: Prerequisite.first.id,
+             course_prerequisite_id: CoursePrerequisite.first.id,
              reaction_id: Reaction.first.id
            }.to_json,
            'CONTENT_TYPE' => 'application/json'
@@ -138,7 +139,7 @@ describe 'Reaction Routes' do
     it '(BAD) should report error if given wrong data' do
       post 'api/v0.1/reactions/new_prerequisite_reaction/',
            {
-             sad_prerequisite_id: Prerequisite.first.id,
+             sad_course_prerequisite_id: CoursePrerequisite.first.id,
              sad_reaction_id: Reaction.first.id
            }.to_json,
            'CONTENT_TYPE' => 'application/json'
@@ -149,7 +150,7 @@ describe 'Reaction Routes' do
     it '(BAD) should report error if given not existing prerequisite or reacion id' do
       post 'api/v0.1/reactions/new_prerequisite_reaction/',
            {
-             prerequisite_id: BAD_PREREQUISITE_ID,
+             course_prerequisite_id: BAD_COURSE_PREREQUISITE_ID,
              reaction_id: BAD_REACTION_ID
            }.to_json,
            'CONTENT_TYPE' => 'application/json'
@@ -193,6 +194,7 @@ describe 'Reaction Routes' do
     before do
       DB[:courses].delete
       DB[:prerequisites].delete
+      DB[:course_prerequisites].delete
       DB[:reactions].delete
       DB[:course_prerequisite_reactions].delete
       post 'api/v0.1/courses',
@@ -206,14 +208,14 @@ describe 'Reaction Routes' do
            HAPPY_REACTION,
            'CONTENT_TYPE' => 'application/json'
 
-      get "api/v0.1/prerequisite/reactions/#{Prerequisite.first.id}/?"
+      get "api/v0.1/prerequisite/reactions/#{CoursePrerequisite.first.id}/?"
 
       last_response.status.must_equal 200
       last_response.body.must_include 'reactions'
     end
 
     it '(SAD) should report error if prerequisite is not found' do
-      get "api/v0.1/prerequisite/reactions/#{BAD_PREREQUISITE_ID}/?"
+      get "api/v0.1/prerequisite/reactions/#{BAD_COURSE_PREREQUISITE_ID}/?"
 
       last_response.status.must_equal 404
     end

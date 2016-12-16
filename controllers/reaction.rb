@@ -4,7 +4,7 @@
 class ShareLearningAPI < Sinatra::Base
   extend Econfig::Shortcut
 
-  get "/#{API_VER}/prerequisite/reactions/:prerequisite_id/?" do
+  get "/#{API_VER}/prerequisite/reactions/:course_prerequisite_id/?" do
     results = ShowPrerequisiteReactions.call(params)
 
     if results.success?
