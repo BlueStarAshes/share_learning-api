@@ -43,8 +43,10 @@ class AddPrerequisite
   register :add_prerequisite, lambda { |params|
     begin
       course_name = params[:prerequisite].strip().split(" ").map {|word| word.capitalize}.join(" ")
-      my_prerequisite = Prerequisite.create(course_name: course_name)
-
+      my_prerequisite = Prerequisite.find(course_name: course_name)
+      if my_prerequisite == nil
+        my_prerequisite = Prerequisite.create(course_name: course_name)
+      end
       Right({prerequisite: my_prerequisite, course_id: params[:course_id]})
     rescue
       Left(Error.new(:bad_request, 'Failed to create helpful rating for course'))

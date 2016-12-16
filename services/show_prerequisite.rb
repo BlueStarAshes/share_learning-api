@@ -28,7 +28,7 @@ class ShowPrerequisite
     all = AllCoursePrerequisites.new(
       results.map do |item|
         p = Prerequisite.find(id: item.prerequisite_id)
-        Prerequisites.new(p.id, p.course_name)
+        Prerequisites.new(item.id, p.id, p.course_name)
       end
     )
     Right(all)
