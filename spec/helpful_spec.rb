@@ -57,7 +57,6 @@ describe 'Helpful Routes' do
       get "api/v0.1/course/helpful/#{Course.first.id}/?"
 
       last_response.status.must_equal 200
-      last_response.body.must_include 'The average helpful rating'
     end
 
     it '(SAD) should report error if course is not found' do
