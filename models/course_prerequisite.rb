@@ -4,5 +4,5 @@
 class CoursePrerequisite < Sequel::Model
   many_to_one :course
   one_to_one :prerequisite
-  one_to_many :coursePrerequisiteReaction
+  one_to_many :coursePrerequisiteReactions
 end
