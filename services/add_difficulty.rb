@@ -24,7 +24,7 @@ class AddDifficulty
     if my_rating >= 0.0 && my_rating <= 5.0
       Right(params)
     else
-      Left(Error.new(:unprocessable_entity, 'rating must be an integer between 0~5'))
+      Left(Error.new(:unprocessable_entity, 'rating must be a number between 0~5'))
     end
   }
 
