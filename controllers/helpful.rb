@@ -11,7 +11,7 @@ class ShareLearningAPI < Sinatra::Base
 
     if result.success?
       content_type 'application/json'
-      result.value.to_json
+      HelpfulRatingRepresenter.new(result.value).to_json
     else
       ErrorRepresenter.new(result.value).to_status_response
     end    
