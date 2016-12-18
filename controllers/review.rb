@@ -9,8 +9,8 @@ class ShareLearningAPI < Sinatra::Base
     result = SearchReviews.call(input)
 
     if result.success?
-      content_type 'text/plain'
-      body result.value
+      content_type 'application/json'
+      AllCourseReviewsRepresenter.new(result.value).to_json
     else
       ErrorRepresenter.new(result.value).to_status_response
     end
