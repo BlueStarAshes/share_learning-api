@@ -1,2 +1,2 @@
 queues:
-  - [ShareLearning_blureze, 1]
+  - [share_learning_api_queue, 1]
