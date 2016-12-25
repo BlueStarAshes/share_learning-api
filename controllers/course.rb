@@ -19,7 +19,7 @@ class ShareLearningAPI < Sinatra::Base
 
   # store courses to database
   post "/#{API_VER}/courses/?" do
-    result = LoadCoursesFromAPI.call(params)
+    result = LoadNewCoursesFromAPI.call(params)
 
     if result.success?
       content_type 'text/plain'
