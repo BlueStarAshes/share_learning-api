@@ -7,10 +7,9 @@ class AddNewReviewReaction
   extend Dry::Container::Mixin
 
   register :validate_ids, lambda { |params|
-    body_params = JSON.parse params[:request]
-    review_id = body_params['review_id']
-    reaction_id = body_params['reaction_id']
-
+    input = ReviewReactionsRepresenter.new(ReviewReactions.new).from_json(params)
+    review_id = input.review_id
+    reaction_id = input.reaction_id
     if review_id && reaction_id
       Right(
         review_id: review_id,
