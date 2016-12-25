@@ -57,8 +57,7 @@ describe 'Reaction Routes' do
       DB[:reviews].delete
       DB[:reactions].delete
       DB[:review_reactions].delete
-      post 'api/v0.1/courses',
-           'CONTENT_TYPE' => 'application/json'
+      LoadNewCoursesFromAPI.call('')
       next while Course.count < 1
 
       post "api/v0.1/reviews/#{Course.first.id}",
@@ -112,8 +111,7 @@ describe 'Reaction Routes' do
       DB[:course_prerequisites].delete
       DB[:reactions].delete
       DB[:course_prerequisite_reactions].delete
-      post 'api/v0.1/courses',
-           'CONTENT_TYPE' => 'application/json'
+      LoadNewCoursesFromAPI.call('')
       next while Course.count < 1
 
       post "api/v0.1/prerequisite/#{Course.first.id}",
@@ -156,7 +154,7 @@ describe 'Reaction Routes' do
            'CONTENT_TYPE' => 'application/json'
 
       last_response.status.must_equal 422
-    end    
+    end
   end
 
   describe 'Read course_review_reaction' do
@@ -165,8 +163,7 @@ describe 'Reaction Routes' do
       DB[:reviews].delete
       DB[:reactions].delete
       DB[:review_reactions].delete
-      post 'api/v0.1/courses',
-           'CONTENT_TYPE' => 'application/json'
+      LoadNewCoursesFromAPI.call('')
     end
 
     it '(HAPPY) should successfully read course review information' do
@@ -197,8 +194,7 @@ describe 'Reaction Routes' do
       DB[:course_prerequisites].delete
       DB[:reactions].delete
       DB[:course_prerequisite_reactions].delete
-      post 'api/v0.1/courses',
-           'CONTENT_TYPE' => 'application/json'
+      LoadNewCoursesFromAPI.call('')
     end
 
     it '(HAPPY) should successfully read course prerequisite information' do
@@ -219,5 +215,5 @@ describe 'Reaction Routes' do
 
       last_response.status.must_equal 404
     end
-  end    
+  end
 end

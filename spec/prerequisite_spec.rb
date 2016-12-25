@@ -15,8 +15,7 @@ describe 'Prerequisite Routes' do
       DB[:courses].delete
       DB[:prerequisites].delete
       DB[:course_prerequisites].delete
-      post 'api/v0.1/courses',
-           'CONTENT_TYPE' => 'application/json'
+      LoadNewCoursesFromAPI.call('')
     end
 
     it '(HAPPY) should successfully add a new prerequisite' do
@@ -31,7 +30,7 @@ describe 'Prerequisite Routes' do
            { prerequisite: HAPPY_PREREQUISITE }.to_json
 
       last_response.status.must_equal 404
-    end  
+    end
 
     it '(BAD) should report error if prerequisite is empty' do
       post "api/v0.1/prerequisite/#{Course.first.id}",
@@ -46,8 +45,7 @@ describe 'Prerequisite Routes' do
       DB[:courses].delete
       DB[:prerequisites].delete
       DB[:course_prerequisites].delete
-      post 'api/v0.1/courses',
-           'CONTENT_TYPE' => 'application/json'
+      LoadNewCoursesFromAPI.call('')
     end
 
     it '(HAPPY) should successfully read course prerequisite information' do
@@ -71,5 +69,5 @@ describe 'Prerequisite Routes' do
 
       last_response.status.must_equal 404
     end
-  end  
+  end
 end
