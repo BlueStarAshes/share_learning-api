@@ -82,7 +82,9 @@ namespace :queue do
   desc "Create SQS queue for Shoryuken"
   task :create do
     config = ShareLearningAPI.config
-    sqs = Aws::SQS::Client.new(region: config.AWS_REGION)
+    sqs = Aws::SQS::Client.new(region: config.AWS_REGION,
+                               access_key_id: config.AWS_ACCESS_KEY_ID,
+                               secret_access_key: config.AWS_SECRET_ACCESS_KEY)
 
     begin
       queue = sqs.create_queue(queue_name: config.COURSE_QUEUE)

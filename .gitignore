@@ -5,3 +5,4 @@ spec/fixtures/cassettes
 db/*.*
 .bundle/
 .rake_tasks~
+workers/shoryuken.yml
