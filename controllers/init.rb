@@ -3,6 +3,7 @@ require 'sinatra'
 require 'econfig'
 require 'share_learning'
 require 'date'
+require 'shoryuken'
 
 require_relative 'base'
 

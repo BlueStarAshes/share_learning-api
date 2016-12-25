@@ -74,3 +74,21 @@ namespace :quality do
     sh 'rubocop'
   end
 end
+
+namespace :queue do
+  require 'aws-sdk'
+  require_relative 'init'
+
+  desc "Create SQS queue for Shoryuken"
+  task :create do
+    config = ShareLearningAPI.config
+    sqs = Aws::SQS::Client.new(region: config.AWS_REGION)
+
+    begin
+      queue = sqs.create_queue(queue_name: config.COURSE_QUEUE)
+      puts "Queue #{config.COURSE_QUEUE} created on #{config.AWS_REGION}"
+    rescue => e
+      puts "Error creating queue: #{e}"
+    end
+  end
+end
