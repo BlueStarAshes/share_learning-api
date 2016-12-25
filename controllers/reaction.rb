@@ -37,7 +37,7 @@ class ShareLearningAPI < Sinatra::Base
   end
 
   post "/#{API_VER}/reactions/new_review_reaction/?" do
-    input = { request: request.body.read }
+    input = request.body.read
     result = AddNewReviewReaction.call(input)
 
     if result.success?
