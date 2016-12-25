@@ -16,6 +16,12 @@ gem 'dry-monads'
 gem 'dry-container'
 gem 'dry-transaction'
 
+gem 'tux'
+gem 'hirb'
+
+gem 'aws-sdk', '~> 2'
+gem 'shoryuken'
+
 group :development, :test do
   gem 'pry-byebug'
   gem 'sqlite3'
@@ -36,11 +42,6 @@ group :test do
 
   gem 'vcr'
   gem 'webmock'
-end
-
-group :development, :production do
-  gem 'tux'
-  gem 'hirb'
 end
 
 group :production do
