@@ -28,7 +28,7 @@ class LoadNewCoursesWorker
   )
 
   include Shoryuken::Worker
-  shoryuken_options queue: config.GROUP_QUEUE, auto_delete: true
+  shoryuken_options queue: config.COURSE_QUEUE, auto_delete: true
 
   def perform(_sqs_msg)
     result = LoadCoursesFromAPI.call('')
