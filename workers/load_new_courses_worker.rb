@@ -19,6 +19,7 @@ class LoadNewCoursesWorker
       secret_access_key:  LoadNewCoursesWorker.config.AWS_SECRET_ACCESS_KEY,
       region:             LoadNewCoursesWorker.config.AWS_REGION
     }
+
   end
 
   YouTube::YouTubeAPI.config.update(
@@ -29,9 +30,9 @@ class LoadNewCoursesWorker
   shoryuken_options queue: config.COURSE_QUEUE, auto_delete: true
 
   def perform(_sqs_msg)
-    result = LoadCoursesFromAPI.call('')
+    result = LoadNewCoursesFromAPI.call('')
     puts "RESULT: #{result.value}"
 
-    HttpResultRepresenter.new(result.value).to_status_response
+    ErrorRepresenter.new(result.value).to_status_response
   end
 end

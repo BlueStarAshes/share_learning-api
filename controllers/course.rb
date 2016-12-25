@@ -19,14 +19,8 @@ class ShareLearningAPI < Sinatra::Base
 
   # store courses to database
   post "/#{API_VER}/courses/?" do
-    result = LoadNewCoursesFromAPI.call(params)
-    # result = LoadCoursesFromAPI.call(params)
-
-    if result.success?
-      content_type 'text/plain'
-      body result.value
-    else
-      ErrorRepresenter.new(result.value).to_status_response
-    end
+    result = LoadNewCoursesWorker.perform_async(params)
+    puts "WORKER: #{result}"
+    status 202
   end
 end
