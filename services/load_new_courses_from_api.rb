@@ -21,20 +21,17 @@ class LoadNewCoursesFromAPI
     begin
       @udacity_counter = 0
       udacity_courses.each do |course|
-        course_find = Course.find(original_source_id: course[:id])
-        if course_find
-          next
-        else
-          Course.create(
-            title: course[:title],
-            source: 'Udacity',
-            original_source_id: course[:id],
-            introduction: course[:intro],
-            link: course[:link],
-            photo: course[:image]
-          )
-        @udacity_counter += 1          
-        end
+        course_find = Course.where(original_source_id: course[:id]).all
+        next unless course_find.empty?
+        Course.create(
+          title: course[:title],
+          source: 'Udacity',
+          original_source_id: course[:id],
+          introduction: course[:intro],
+          link: course[:link],
+          photo: course[:image]
+        )
+        @udacity_counter += 1       
       end
       Right('')
     rescue
@@ -57,20 +54,17 @@ class LoadNewCoursesFromAPI
       coursera_courses.each do |item|
         item.each.with_index do |course, index|
           if index == 1
-            course_find = Course.find(original_source_id: course[:course_id])
-            if course_find
-              next
-            else            
-              Course.create(
-                title: course[:course_name],
-                source: 'Coursera',
-                original_source_id: course[:course_id],
-                introduction: course[:description],
-                link: course[:link],
-                photo: course[:photo_url]
-              )
-              @coursera_counter += 1
-            end
+            course_find = Course.where(original_source_id: course[:course_id]).all
+            next unless course_find.empty?          
+            Course.create(
+              title: course[:course_name],
+              source: 'Coursera',
+              original_source_id: course[:course_id],
+              introduction: course[:description],
+              link: course[:link],
+              photo: course[:photo_url]
+            )
+            @coursera_counter += 1
           end
         end
       end
