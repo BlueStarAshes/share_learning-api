@@ -75,9 +75,9 @@ class LoadNewCoursesFromAPI
   }
 
   register :return_information, lambda { |input|
-    Right(
-      "Courses added, #{@udacity_counter} from Udacity, " \
-      "#{@coursera_counter} from Coursera"
+    Right(Error.new(:success,
+                    "Courses added, #{@udacity_counter} from Udacity, " \
+                    "#{@coursera_counter} from Coursera")
     )
   }
 
