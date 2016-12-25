@@ -21,9 +21,8 @@ class LoadNewCoursesWorker
     }
   end
 
-  FaceGroup::FbApi.config.update(
-    client_id:      LoadNewCoursesWorker.config.FB_CLIENT_ID,
-    client_secret:  LoadNewCoursesWorker.config.FB_CLIENT_SECRET
+  YouTube::YouTubeAPI.config.update(
+    api_key:      LoadNewCoursesWorker.config.YOUTUBE_API_KEY
   )
 
   include Shoryuken::Worker
