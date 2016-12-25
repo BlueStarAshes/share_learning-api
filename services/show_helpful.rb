@@ -38,7 +38,7 @@ class ShowHelpful
     end
     avg_rating = total_rating / course_helpful_mapping['course_helpfuls_mapping'].length
 
-    Right(avg_rating)
+    Right(HelpfulRating.new(avg_rating))
   }
 
   def self.call(params)

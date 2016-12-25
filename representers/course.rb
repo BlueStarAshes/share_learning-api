@@ -7,6 +7,8 @@ class CourseRepresenter < Roar::Decorator
   property :id
   property :title
   property :source
+  property :original_source_id
   property :introduction
   property :link
+  property :photo
 end

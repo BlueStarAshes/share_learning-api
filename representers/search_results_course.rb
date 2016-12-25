@@ -4,6 +4,7 @@
 class SearchResultsCourseRepresenter < Roar::Decorator
   include Roar::JSON
 
+  property :id
   property :title
   property :introduction
   property :resource_url

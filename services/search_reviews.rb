@@ -29,26 +29,14 @@ class SearchReviews
   }
 
   register :search_reviews, lambda { |course_reviews_mapping|
-    course_reviews = course_reviews_mapping['course_reviews_mapping'].map do |review|
-      ReviewsSearchResults.new(Review.where(id: review['review_id']))
-    end
+    course_reviews = AllCourseReviews.new(
+      course_reviews_mapping['course_reviews_mapping'].map do |review|
+        r = Review.find(id: review['review_id'])
+        Reviews.new(r.id, r.content, r.created_time)
+      end
+    )
 
-    if course_reviews.empty?
-      Left(Error.new(:bad_request, 'Cannot find the reviews'))
-    else
-      Right(course_reviews)
-    end
-  }
-
-  register :generate_output, lambda { |course_reviews|
-    output = []
-    course_reviews.each do |course_review|
-      review = ReviewsSearchResultsRepresenter.new(course_review).to_json
-      review = JSON.parse(review)
-      output.push(review['reviews'][0])
-    end
-
-    Right(output.to_json)
+    Right(course_reviews)
   }
 
   def self.call(params)
@@ -56,7 +44,6 @@ class SearchReviews
       step :validate_course
       step :validate_course_review
       step :search_reviews
-      step :generate_output
     end.call(params)
   end
 end

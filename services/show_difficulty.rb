@@ -38,7 +38,7 @@ class ShowDifficulty
     end
     avg_rating = total_rating / course_difficulty_mapping['course_difficulties_mapping'].length
 
-    Right(avg_rating)
+    Right(DifficultyRating.new(avg_rating))
   }
 
   def self.call(params)
