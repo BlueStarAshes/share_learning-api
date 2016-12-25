@@ -13,8 +13,7 @@ describe 'Course Routes' do
   describe 'Find stored course by its id' do
     before do
       DB[:courses].delete
-      post 'api/v0.1/courses',
-           'CONTENT_TYPE' => 'application/json'
+      LoadNewCoursesFromAPI.call('')
     end
 
     it '(HAPPY) should find a course given a correct id' do
@@ -40,11 +39,10 @@ describe 'Course Routes' do
     end
 
     it '(HAPPY) should store course information to database successfully' do
-      post 'api/v0.1/courses',
-           'CONTENT_TYPE' => 'application/json'      
+      post 'api/v0.1/courses'
 
-      last_response.status.must_equal 200
-      Course.count.must_be :>=, 1
+      last_response.status.must_equal 202
+      # Course.count.must_be :>=, 1
     end
-  end  
+  end
 end

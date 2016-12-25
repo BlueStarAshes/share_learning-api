@@ -14,8 +14,7 @@ describe 'Review Routes' do
     before do
       DB[:reviews].delete
       DB[:courses].delete
-      post 'api/v0.1/courses',
-           'CONTENT_TYPE' => 'application/json'      
+      LoadNewCoursesFromAPI.call('')
     end
 
     it '(HAPPY) should successfully create a new review' do
@@ -42,15 +41,14 @@ describe 'Review Routes' do
            'CONTENT_TYPE' => 'application/json'
 
       last_response.status.must_equal 404
-    end    
+    end
   end
 
   describe 'Read course reviews' do
     before do
       DB[:reviews].delete
       DB[:courses].delete
-      post 'api/v0.1/courses',
-           'CONTENT_TYPE' => 'application/json'
+      LoadNewCoursesFromAPI.call('')
     end
 
     it '(HAPPY) should successfully read course reviews' do
@@ -62,7 +60,6 @@ describe 'Review Routes' do
 
       last_response.status.must_equal 200
       last_response.body.must_include 'reviews'
-
     end
 
     it '(SAD) should report error if course is not found' do
@@ -76,6 +73,5 @@ describe 'Review Routes' do
 
       last_response.status.must_equal 404
     end
-  
-  end  
+  end
 end

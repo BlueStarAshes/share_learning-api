@@ -15,8 +15,7 @@ describe 'Difficulty Routes' do
       DB[:courses].delete
       DB[:difficulties].delete
       DB[:course_difficulties].delete
-      post 'api/v0.1/courses',
-           'CONTENT_TYPE' => 'application/json'
+      LoadNewCoursesFromAPI.call('')
     end
 
     it '(HAPPY) should successfully add a new difficulty rating' do
@@ -32,7 +31,7 @@ describe 'Difficulty Routes' do
            { rating: HAPPY_RATING }.to_json
 
       last_response.status.must_equal 404
-    end  
+    end
 
     it '(BAD) should report error if rating is not an integer' do
       post "api/v0.1/difficulty/#{Course.first.id}",
@@ -47,8 +46,7 @@ describe 'Difficulty Routes' do
       DB[:difficulties].delete
       DB[:course_difficulties].delete
       DB[:courses].delete
-      post 'api/v0.1/courses',
-           'CONTENT_TYPE' => 'application/json'
+      LoadNewCoursesFromAPI.call('')
     end
 
     it '(HAPPY) should successfully read course difficulty information' do
@@ -70,5 +68,5 @@ describe 'Difficulty Routes' do
 
       last_response.status.must_equal 404
     end
-  end  
+  end
 end

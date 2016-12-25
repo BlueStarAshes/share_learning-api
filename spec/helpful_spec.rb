@@ -15,8 +15,7 @@ describe 'Helpful Routes' do
       DB[:courses].delete
       DB[:helpfuls].delete
       DB[:course_helpfuls].delete
-      post 'api/v0.1/courses',
-           'CONTENT_TYPE' => 'application/json'
+      LoadNewCoursesFromAPI.call('')
     end
 
     it '(HAPPY) should successfully add a new helpful rating' do
@@ -31,7 +30,7 @@ describe 'Helpful Routes' do
            { rating: HAPPY_RATING }.to_json
 
       last_response.status.must_equal 404
-    end  
+    end
 
     it '(BAD) should report error if rating is not an integer' do
       post "api/v0.1/helpful/#{Course.first.id}",
@@ -46,8 +45,7 @@ describe 'Helpful Routes' do
       DB[:helpfuls].delete
       DB[:course_helpfuls].delete
       DB[:courses].delete
-      post 'api/v0.1/courses',
-           'CONTENT_TYPE' => 'application/json'
+      LoadNewCoursesFromAPI.call('')
     end
 
     it '(HAPPY) should successfully read course helpful information' do
@@ -70,5 +68,5 @@ describe 'Helpful Routes' do
 
       last_response.status.must_equal 404
     end
-  end  
+  end
 end
