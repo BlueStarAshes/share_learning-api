@@ -5,8 +5,8 @@ class LoadNewCoursesFromAPI
   extend Dry::Monads::Either::Mixin
   extend Dry::Container::Mixin
 
-  @udacity_counter = 0
-  @coursera_counter = 0
+  # @udacity_counter = 0
+  # @coursera_counter = 0
 
   register :retrieve_udacity_courses, lambda { |input|
     begin
@@ -19,20 +19,24 @@ class LoadNewCoursesFromAPI
 
   register :create_udacity_courses, lambda { |udacity_courses|
     begin
+      @udacity_counter = 0
       udacity_courses.each do |course|
         course_find = Course.find(original_source_id: course[:id])
-        next unless course_find.empty?
-        Course.create(
-          title: course[:title],
-          source: 'Udacity',
-          original_source_id: course[:id],
-          introduction: course[:intro],
-          link: course[:link],
-          photo: course[:image]
-        )
-        @udacity_counter += 1
+        if course_find
+          next
+        else
+          Course.create(
+            title: course[:title],
+            source: 'Udacity',
+            original_source_id: course[:id],
+            introduction: course[:intro],
+            link: course[:link],
+            photo: course[:image]
+          )
+        @udacity_counter += 1          
+        end
       end
-      Right
+      Right('')
     rescue
       Left(Error.new(:bad_request, 'Cannot create Udacity courses'))
     end
@@ -49,25 +53,28 @@ class LoadNewCoursesFromAPI
 
   register :create_coursera_courses, lambda { |coursera_courses|
     begin
+      @coursera_counter = 0
       coursera_courses.each do |item|
         item.each.with_index do |course, index|
-          course_find = Course.find(original_source_id: course[:course_id])
-          next unless course_find.empty?
-
           if index == 1
-            Course.create(
-              title: course[:course_name],
-              source: 'Coursera',
-              original_source_id: course[:course_id],
-              introduction: course[:description],
-              link: course[:link],
-              photo: course[:photo_url]
-            )
-            @coursera_counter += 1
+            course_find = Course.find(original_source_id: course[:course_id])
+            if course_find
+              next
+            else            
+              Course.create(
+                title: course[:course_name],
+                source: 'Coursera',
+                original_source_id: course[:course_id],
+                introduction: course[:description],
+                link: course[:link],
+                photo: course[:photo_url]
+              )
+              @coursera_counter += 1
+            end
           end
         end
       end
-      Right
+      Right('')
     rescue
       Left(Error.new(:bad_request, 'Cannot create Coursera courses'))
     end
@@ -82,8 +89,8 @@ class LoadNewCoursesFromAPI
 
   def self.call(params)
     Dry.Transaction(container: self) do
-      # step :retrieve_udacity_courses
-      # step :create_udacity_courses
+      step :retrieve_udacity_courses
+      step :create_udacity_courses
       step :retrieve_coursera_courses
       step :create_coursera_courses
       step :return_information
