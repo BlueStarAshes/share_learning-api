@@ -2,7 +2,6 @@
 require 'econfig'
 require 'shoryuken'
 
-require_relative '../lib/init.rb'
 require_relative '../values/init.rb'
 require_relative '../config/init.rb'
 require_relative '../models/init.rb'
