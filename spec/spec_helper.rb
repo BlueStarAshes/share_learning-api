@@ -41,7 +41,7 @@ BAD_COURSE_ID = '0'
 HAPPY_REVIEW_CONTENT = 'HAPPY review'
 SAD_REVIEW_CONTENT = 'SAD review'
 
-HAPPY_REACTION = { type: 'Like' }.to_json
+HAPPY_REACTION = { type: 'Like', emoji: 'em em---1' }.to_json
 SAD_REACTION = { sad: 'Like' }.to_json
 
 HAPPY_RATING = 1.0
