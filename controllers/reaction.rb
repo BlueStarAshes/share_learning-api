@@ -4,11 +4,22 @@
 class ShareLearningAPI < Sinatra::Base
   extend Econfig::Shortcut
 
+  # Get all the instances in Reaction table currently
+  get "/#{API_VER}/reactions/?" do
+    results = FindAllReactions.call('')
+
+    if results.success?
+      AllReactionsRepresenter.new(results.value).to_json
+    else
+      ErrorRepresenter.new(results.value).to_status_response
+    end
+  end
+
   get "/#{API_VER}/prerequisite/reactions/:course_prerequisite_id/?" do
     results = ShowPrerequisiteReactions.call(params)
 
     if results.success?
-      AllReactionsRepresenter.new(results.value).to_json
+      CollectedReactionsRepresenter.new(results.value).to_json
     else
       ErrorRepresenter.new(results.value).to_status_response
     end
@@ -18,7 +29,7 @@ class ShareLearningAPI < Sinatra::Base
     results = ShowReviewReactions.call(params)
 
     if results.success?
-      AllReactionsRepresenter.new(results.value).to_json
+      CollectedReactionsRepresenter.new(results.value).to_json
     else
       ErrorRepresenter.new(results.value).to_status_response
     end

@@ -8,9 +8,10 @@ class AddNewReaction
   register :validate_type, lambda { |params|
     body_params = JSON.parse params[:request]
     reaction_type = body_params['type']
+    reaction_emoji = body_params['emoji']
 
     if reaction_type
-      Right(type: reaction_type)
+      Right(type: reaction_type, emoji: reaction_emoji)
     else
       Left(
         Error.new(
@@ -40,7 +41,8 @@ class AddNewReaction
   register :create_reaction, lambda { |params|
     begin
       Reaction.create(
-        type: params[:type]
+        type: params[:type],
+        emoji: params[:emoji]
       )
 
       Right('Successfully create a new instance of Reaction')

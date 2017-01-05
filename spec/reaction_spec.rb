@@ -24,6 +24,7 @@ describe 'Reaction Routes' do
 
       Reaction.count.must_be :>=, 1
       Reaction.first.type.must_equal JSON.parse(HAPPY_REACTION)['type']
+      Reaction.first.emoji.must_equal JSON.parse(HAPPY_REACTION)['emoji']
     end
 
     it '(BAD) should report error if given wrong data' do
@@ -154,6 +155,23 @@ describe 'Reaction Routes' do
            'CONTENT_TYPE' => 'application/json'
 
       last_response.status.must_equal 422
+    end
+  end
+
+  describe 'Get all reaction instances in reactions table' do
+    before do
+      DB[:reactions].delete
+      post 'api/v0.1/reactions/new_reaction/',
+           HAPPY_REACTION,
+           'CONTENT_TYPE' => 'application/json'
+    end
+
+    it '(HAPPY) should successfully get all reaction instances' do
+      get 'api/v0.1/reactions'
+
+      last_response.status.must_equal 200
+      last_response.body.must_include 'type'
+      last_response.body.must_include 'emoji'
     end
   end
 
