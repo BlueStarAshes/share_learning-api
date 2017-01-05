@@ -4,6 +4,7 @@
 class ReactionRepresenter < Roar::Decorator
   include Roar::JSON
 
+  property :id
   property :type
   property :emoji
 end
